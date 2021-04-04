@@ -47,91 +47,79 @@ Date.prototype.Format = function (fmt) { //author: meizz
 }
 
 /**
- * 切換iframe2.0
+ * 切換iframe3.0
  * @param srcValue
  * @param changId
  */
-function changeIframeMain(srcValue,changId){
-    var tabsParent = jQuery(document.getElementById('tabs-parent'));
-    var changItem = jQuery(document.getElementById("selecter-content-"+changId));
-    tabsParent.children('div').attr("style",'display:none;');
-    if(changItem.length){ //判斷有元素
-        var tab = jQuery(document.getElementById("selecter-content-"+changId));
-        tab.attr("style",'display:block;');
+function changeIframeMain(srcValue,changId) {
+
+    var tabsParent = jQuery(document.getElementById('screen-tab'));
+    var screenTabParent = jQuery(document.getElementById('screen-tabContent'));
+    var tabAId = "screen-"+changId+"-tab";
+    var changItem = jQuery(document.getElementById(tabAId));
+
+    if(changItem.length) { //判斷有元素
+        $(changItem).tab('show');
     }
-    else{
-        var tab = jQuery(document.createElement("div"));
+    else {
+        var tabA = jQuery(document.createElement("a"));
+        var closeButtun = "<button type=\"button\" class=\"close\" onclick=\"closeApp('"+changId+"');\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>";
+        var tabTitle = jQuery(document.createElement("span"));
+
+        var tabPane = jQuery(document.createElement("div"));
+        var tabPaneId = "screen-"+changId;
         var tabIframe = jQuery(document.createElement("iframe"));
-        tabIframe.attr("id","ifrom-data-"+changId);
-        tabIframe.attr("style","width:100%;height: 1080px");
+        var tabIframeId = "screen-"+changId+"-content"
+
+        //處理標題
+        tabA.attr("class","nav-item nav-link");
+        tabA.attr("id",tabAId);
+        tabA.attr("data-toggle","tab");
+        tabA.attr("href","#"+tabPaneId);
+        tabA.attr("role","tab");
+        tabA.attr("aria-controls",tabPaneId);
+        tabA.attr("aria-selected","false");
+        tabTitle.attr("style","margin: 8;");
+        tabTitle.text("???");
+        tabA.append(tabTitle);
+        tabA.append(closeButtun);
+        tabsParent.append(tabA);
+
+        //處理內容
+        tabPane.attr("class","tab-pane fade");
+        tabPane.attr("id",tabPaneId);
+        tabPane.attr("role","tabpanel");
+        tabPane.attr("aria-labelledby",tabAId);
+        tabIframe.attr("id",tabIframeId);
+        tabIframe.attr("class","contentScreen");
         tabIframe.attr("frameborder","0");
         tabIframe.attr("src",srcValue);
-        tab.append(tabIframe);
-        tab.attr("id","selecter-content-"+changId);
-        tab.attr("style",'display:block;');
-        tabsParent.prepend(tab);
+        tabPane.append(tabIframe);
+        screenTabParent.append(tabPane);
+
+        $(tabA).tab('show');
     }
+
 }
+
 
 /**
  * 關閉程式
  * @param appId
  */
-function closeApp(appId) {
-    var changItem = jQuery(document.getElementById("selecter-content-"+appId));
+function closeApp(changId) {
+
+    var tabAId = "screen-"+changId+"-tab";
+    var changItem = jQuery(document.getElementById(tabAId));
     if(changItem.length) { //判斷有元素
         changItem.remove();
-        var tabsParent = jQuery(document.getElementById('tabs-parent').firstElementChild);
-        tabsParent.attr("style",'display:block;');
     }
-}
 
-/**
- * 切換程式的畫面內容
- * @param url
- * @param contentId
- */
-function changContent(url,contentId) {
-    var contentParent = jQuery(document.getElementById('content-parent'));
-    contentParent.children('div').attr("style",'display:none;');
-    var changItem = jQuery(document.getElementById(contentId));
-    if(changItem.length){
-        changItem.attr("style",'display:block;');
+    var tabPaneId = "screen-"+changId;
+    var tabPane = jQuery(document.getElementById(tabPaneId));
+    if(tabPane.length) { //判斷有元素
+        tabPane.remove();
     }
-    else{
-        var contentDiv = jQuery(document.createElement("div"));
-        var contentIframe = jQuery(document.createElement("iframe"));
-        contentIframe.attr('id','content-iframe-'+contentId);
-        contentIframe.attr("style","width:100%;height: 1080px");
-        contentIframe.attr("frameborder","0");
-        contentIframe.attr("src",url);
-        contentDiv.append(contentIframe);
-        contentDiv.attr("id",contentId);
-        contentDiv.attr("style",'display:block;');
-        contentParent.prepend(contentDiv);
-
-        var dropdownMenu = jQuery(document.getElementById('dropdownMenu'));
-        var dropdownMenua = jQuery(document.createElement("a"));
-        dropdownMenua.attr('onclick','changContent("","'+contentId+'");');
-        dropdownMenua.attr("class",'dropdown-item');
-        dropdownMenua.attr("href",'#');
-        dropdownMenua.text('新增');
-        dropdownMenua.attr("id",'dropdownMenua-'+contentId);
-        dropdownMenu.append(dropdownMenua);
-    }
-}
-
-/**
- * 關閉程式的畫面內容
- * @param contentId
- */
-function closeContent(contentId) {
-    var dropdownMenua = jQuery(document.getElementById('dropdownMenua-'+contentId));
-    var contentDiv = jQuery(document.getElementById(contentId));
-    dropdownMenua.remove();
-    contentDiv.remove();
-    var dropdownMenu = jQuery(document.getElementById('content-parent').firstElementChild);
-    dropdownMenu.attr("style",'display:block;');
 }
 
 /**
