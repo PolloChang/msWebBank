@@ -111,6 +111,7 @@ function closeApp(changId) {
 
     var tabAId = "screen-"+changId+"-tab";
     var changItem = jQuery(document.getElementById(tabAId));
+    var screenTabs = document.getElementById('screen-tab');
     if(changItem.length) { //判斷有元素
         changItem.remove();
     }
@@ -120,6 +121,9 @@ function closeApp(changId) {
     if(tabPane.length) { //判斷有元素
         tabPane.remove();
     }
+    var lastTab = $(screenTabs).children(':last');
+
+    jQuery(lastTab).tab('show');
 }
 
 /**
