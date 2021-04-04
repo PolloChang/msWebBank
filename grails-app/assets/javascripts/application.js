@@ -141,8 +141,6 @@ function closeContent(contentId) {
  * @param thisVal
  */
 function ajaxChangSelectOption(thisVal,optionId,url){
-    console.log(url);
-    console.log(thisVal.toString());
     var select = jQuery(document.getElementById(optionId));
     jQuery.ajax({
         url: url,
