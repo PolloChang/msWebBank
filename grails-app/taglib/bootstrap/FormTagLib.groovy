@@ -15,11 +15,11 @@ class FormTagLib {
         String type = attrs.remove('inputType')?:"button"
         String classes = attrs.remove('class')?:"btn-primary"
         String showText = attrs.remove('showText')?:"按鈕"
-        String onClick = attrs.remove('onClick')?:""
+        String onclick = attrs.remove('onclick')?:""
 
         def writer = out
 
-        writer << "<button name='${inputName}' id='${id}' type=\"${type}\" class=\"btn btn-sm ${classes} \" onClick='${onClick}' >"
+        writer << "<button name='${inputName}' id='${id}' type=\"${type}\" class=\"btn btn-sm ${classes} \" onclick='${onclick}' >"
         writer << showText
         writer << "</button>"
     }

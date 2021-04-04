@@ -9,7 +9,7 @@ class Bs101 {
 
     static auditable = [ignore: ['dateCreated', 'lastUpdated', 'manCreated', 'manLastUpdated']]
     UUID id
-    Long		pcode
+    String		pcode
     String		ptype
     String		typedesc
     Integer		issure = 2

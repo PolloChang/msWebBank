@@ -52,7 +52,7 @@
                 <bootstrap:button name="print" class="btn-secondary" showText="匯出"/>
             </div>
             <div class="btn-group" role="group">
-                <bootstrap:button name="add-data" class="btn-success" showText="新增"/>
+                <bootstrap:button name="add-data" class="btn-success" showText="新增" onclick="addData();"/>
             </div>
         </div>
     </div>
@@ -64,5 +64,12 @@
         <g:render template="/ex/ex100/resultData" />
     </div>
 </form>
+
+<script type="text/javascript">
+    function addData() {
+        parent.changeIframeMain('${createLink(controller: 'ex100',action: 'addPage')}','blank','新增頁面');
+    }
+</script>
+
 </body>
 </html>
