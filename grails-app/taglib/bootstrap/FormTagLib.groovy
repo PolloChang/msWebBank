@@ -5,13 +5,31 @@ class FormTagLib {
     //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
     static namespace = "bootstrap"
 
+    Closure button = {attrs,body ->
+        if (!attrs.name) {
+            throwTagError("Tag [button] is missing required attribute [name]")
+        }
+
+        String inputName = attrs.remove('name')
+        String id = attrs.remove('id')?:"${inputName}-button"
+        String type = attrs.remove('inputType')?:"button"
+        String classes = attrs.remove('class')?:"btn-primary"
+        String showText = attrs.remove('showText')?:"按鈕"
+        String onClick = attrs.remove('onClick')?:""
+
+        def writer = out
+
+        writer << "<button name='${inputName}' id='${id}' type=\"${type}\" class=\"btn btn-sm ${classes} \" onClick='${onClick}' >"
+        writer << showText
+        writer << "</button>"
+    }
 
     Closure formItem = { attrs,body ->
         if (!attrs.name) {
-            throwTagError("Tag [searchFormItem] is missing required attribute [name]")
+            throwTagError("Tag [formItem] is missing required attribute [name]")
         }
         if (!attrs.labelTitle) {
-            throwTagError("Tag [searchFormItem] is missing required attribute [labelTitle]")
+            throwTagError("Tag [formItem] is missing required attribute [labelTitle]")
         }
         def inputName = attrs.remove('name')
         def id = attrs.remove('id')?:inputName
@@ -43,7 +61,7 @@ class FormTagLib {
 
     Closure checkBox = {attrs ->
         if (!attrs.name) {
-            throwTagError("Tag [searchFormItem] is missing required attribute [name]")
+            throwTagError("Tag [checkBox] is missing required attribute [name]")
         }
         def inputName = attrs.remove('name')
         def inputId = attrs.remove('id')?:inputName

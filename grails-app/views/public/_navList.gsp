@@ -41,7 +41,7 @@
     </g:if>
     <g:else>
         <ul class='nav flex-column'>
-            <li id="tab-select-${row.id.toString()}" class="nav-item" onclick="changeIframeMain('${createLink(controller:row.controller,action: row.action)}','${row.id.toString()}')">
+            <li id="tab-select-${row.id.toString()}" class="nav-item" onclick="changeIframeMain('${createLink(controller:row.controller,action: row.action)}','${row.id.toString()}','${row.appCname}')">
                 <a class='nav-link' href='#'>
                     <icon:svg iconType="fileWhite" message="${row.appCname}" />
                 </a>

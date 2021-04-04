@@ -51,7 +51,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
  * @param srcValue
  * @param changId
  */
-function changeIframeMain(srcValue,changId) {
+function changeIframeMain(srcValue,changId,appName) {
 
     var tabsParent = jQuery(document.getElementById('screen-tab'));
     var screenTabParent = jQuery(document.getElementById('screen-tabContent'));
@@ -80,7 +80,7 @@ function changeIframeMain(srcValue,changId) {
         tabA.attr("aria-controls",tabPaneId);
         tabA.attr("aria-selected","false");
         tabTitle.attr("style","margin: 8;");
-        tabTitle.text("???");
+        tabTitle.text(appName);
         tabA.append(tabTitle);
         tabA.append(closeButtun);
         tabsParent.append(tabA);

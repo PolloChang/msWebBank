@@ -12,7 +12,8 @@
 </head>
 <body>
 <form id="search">
-    <div class="">
+
+    <div>
         <icon:svg iconType="search" message="查詢條件"/>
     </div>
     <div class="searchForm">
@@ -44,6 +45,23 @@
                 />
             </bootstrap:formItem>
         </div>
+        <div class="form-group row">
+            <div class="btn-group" role="group">
+                <bootstrap:button name="search" showText="查詢"/>
+                <bootstrap:button name="clear" inputType="clear" class="btn-light" showText="清除條件"/>
+                <bootstrap:button name="print" class="btn-secondary" showText="匯出"/>
+            </div>
+            <div class="btn-group" role="group">
+                <bootstrap:button name="add-data" class="btn-success" showText="新增"/>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <icon:svg iconType="list" message="查詢結果"/>
+    </div>
+    <div class="searchForm">
+        <g:render template="/ex/ex100/resultData" />
     </div>
 </form>
 </body>
