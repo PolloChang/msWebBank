@@ -12,6 +12,7 @@
 *= require_self
 *= require bootstrap-table/bootstrap-table.min.css
 *= require sweetalert2/sweetalert2.min.css
+*= require jquery-ui/jquery-ui.min.css
 *= encoding UTF-8
 */
 body {
@@ -149,4 +150,8 @@ body {
     .bd-placeholder-img-lg {
         font-size: 3.5rem;
     }
+}
+
+.edit-black th{
+    background-color: #b8daff;
 }

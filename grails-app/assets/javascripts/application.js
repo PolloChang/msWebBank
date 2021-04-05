@@ -12,6 +12,7 @@
 //= require sweetalert2/sweetalert2.all.min.js
 //= require bootstrap-table/bootstrap-table.min.js
 //= require bootstrap-table/bootstrap-table-locale-all.min.js"
+//= require jquery-ui/jquery-ui.min.js
 //= encoding UTF-8
 /**
  * 參數宣告
