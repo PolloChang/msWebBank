@@ -72,7 +72,7 @@ class FormTagLib {
 
         def writer = out
 
-        writer << "<button name='${inputName}' id='${id}' type=\"${type}\" class=\"btn btn-sm ${classes} \" onclick='${onclick}' >"
+        writer << "<button name='${inputName}' id='${id}' type=\"${type}\" class=\"btn btn-sm ${classes} \" onclick=\"${onclick}\" >"
         writer << showText
         writer << "</button>"
     }

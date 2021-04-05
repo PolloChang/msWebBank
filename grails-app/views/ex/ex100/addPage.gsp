@@ -15,111 +15,52 @@
     <div>
         <icon:svg iconType="modeEdit" message="${message(code: "ex100.label")}"/>
     </div>
+    <div id="message">
+    </div>
     <form id="ex100-form">
-        <table class="table edit-black">
-            <tbody>
-            <tr>
-                <th>
-                    ${message(code: "ex100.numbers.label")}
-                </th>
-                <td>
-                    <bootstrap:numberField name="ex100.numbers" value="" />
-                </td>
-                <th>
-                    ${message(code: "ex100.amts.label")}
-                </th>
-                <td>
-                    <bootstrap:textField name="ex100.amts" value="" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    ${message(code: "ex100.string.label")}
-                </th>
-                <td>
-                    <bootstrap:numberField name="ex100.string" value="" />
-                </td>
-                <th>
-                    ${message(code: "ex100.status.label")}
-                </th>
-                <td>
-                    <bootstrap:multipleSelect
-                            name="ex100.status" value=""
-                            from="${[[key:'',val:'---']]}"
-                            optionKey="key" optionValue="val"
-                    />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    ${message(code: "ex100.texts.label")}
-                </th>
-                <td colspan="3">
-                    <bootstrap:textarea name="ex100.texts" value="" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    ${message(code: "ex100.idno.label")}
-                </th>
-                <td>
-                    <bootstrap:textField name="ex100.idno" value="" />
-                </td>
-                <th>
-                    ${message(code: "ex100.name.label")}
-                </th>
-                <td>
-                    <bootstrap:textField name="ex100.name" value="" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    ${message(code: "ex100.sex.label")}
-                </th>
-                <td>
-                    <bootstrap:multipleSelect
-                            name="ex100.sex" value=""
-                            from="${[[key:'',val:'---']]}"
-                            optionKey="key" optionValue="val"
-                    />
-                </td>
-                <th>
-                    ${message(code: "ex100.birthday.label")}
-                </th>
-                <td>
-                    <bootstrap:datepicker name="ex100.birthday" value="${new Date()}" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    ${message(code: "ex100.unid.label")}
-                </th>
-                <td colspan="3">
-                    <bootstrap:textField name="ex100.unid" value="" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    ${message(code: "ex100.addr.label")}
-                </th>
-                <td colspan="3">
-                    <bootstrap:addressSelect
-                            nameZip="ex100.zip" valueZip=""
-                            nameCitycode="ex100.citycode" valueCitycode=""
-                            nameTwnspcode="ex100.twnspcode" valueTwnspcode=""
-                            nameVilgcode="ex100.vilgcode" valueVilgcode=""
-                    />
-                    <bootstrap:textField name="ex100.rode" value="" placeholder="${message(code: "ex100.rode.label")}" />
-                    <bootstrap:textField name="ex100.addr" value="" placeholder="${message(code: "ex100.addr.label")}" />
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <g:render template="/ex/ex100/form" />
     </form>
     <div>
         <div class="btn-group" role="group">
-            <bootstrap:button name="save" showText="儲存" onclick="save('ex100-form');"/>
+            <bootstrap:button name="save" showText="儲存" onclick="saveData('ex100-form');"/>
         </div>
     </div>
+    <script type="text/javascript">
+        function saveData(formId) {
+            jQuery.ajax({
+                url:"${createLink(controller: "ex100" ,action: "ex100Insert")}",
+                data: $('#'+formId).serialize(),
+                type: "POST",
+                ataType: "JSON",
+                success: function (json) {
+                    if(json.acrtionIsSuccess){
+
+                    }
+                    else{
+                        Swal.fire('失敗','儲存失敗','error')
+                            .then((result) => {
+                                var alertDiv = jQuery(document.createElement("div"));
+                                alertDiv.attr("class","alert alert-danger message");
+                                alertDiv.attr("role","alert");
+                                alertDiv.append(json.acrtionMessage);
+                                jQuery('#message').append(alertDiv);
+                            });
+                    }
+                    console.log(json);
+                },
+                beforeSend:function(){
+                    $(".message ").alert('close');
+                },
+                statusCode: {
+                    404: function() {
+                        Swal.fire('400','找不到頁面','warning');
+                    },
+                    500:function() {
+                        Swal.fire('500','系統發生錯誤','warning');
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>

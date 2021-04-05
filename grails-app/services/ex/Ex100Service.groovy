@@ -3,6 +3,7 @@ package ex
 import grails.web.databinding.DataBinder
 import grails.web.servlet.mvc.GrailsParameterMap
 import grails.gorm.transactions.Transactional
+import org.springframework.context.MessageSource
 
 /**
  * Date/檔案建立日期: 2020-02-07
@@ -16,7 +17,7 @@ class Ex100Service implements DataBinder {
 
 
     def toolBoxService
-
+    MessageSource messageSource
 
     /**
      * 查詢
@@ -116,27 +117,42 @@ class Ex100Service implements DataBinder {
     }
 
     /**
+     * 新增資料
+     * @param params
+     * @return
+     */
+    def doInsert(GrailsParameterMap params){
+        return _saveInstance(new Ex100(), params, { Ex100 ex100I ->
+            ex100I.manCreated = '系統管理員'
+            ex100I.validate()
+        })
+    }
+
+    /**
+     * 更新資料
+     * @param params
+     * @return
+     */
+    def doUpdate(GrailsParameterMap params){
+        return _saveInstance(Ex100.get(params.ex100.id), params, { Ex100 ex100I ->
+            ex100I.lastUpdated = new Date()
+            ex100I.manLastUpdated = '系統管理員'
+            ex100I.validate()
+        })
+    }
+
+    /**
      * 儲存資料
      * @param params
      * @return result[LinkedHashMap]
      */
-    def doSave(GrailsParameterMap params) {
+    def _saveInstance(Ex100 ex100I,GrailsParameterMap params,Closure<?> closure) {
         LinkedHashMap result = [:]
-        Ex100 ex100I
-        if(params.ex100.id){
-            ex100I = Ex100.get(params.ex100.id)
-            ex100I.version = ex100I.version +1
-            ex100I.lastUpdated = new Date()
-            ex100I.manLastUpdated = '系統管理員'
-        }
-        else {
-            ex100I = new Ex100()
-            ex100I.manCreated = '系統管理員'
-        }
-
         result.bean = ex100I
+        closure(ex100I)
+
         bindData(ex100I, params["ex100"], [include:ex100I.updateBindMap])
-        ex100I.validate()
+
         if (ex100I.hasErrors() || !ex100I.save(flush: true)) { //失敗
             def errorColumn = []
             ex100I.errors.allErrors.eachWithIndex  {item, index ->
@@ -144,10 +160,12 @@ class Ex100Service implements DataBinder {
             }
             ex100I.discard()
             result.acrtionIsSuccess = false
-            return result
         }
-        result.acrtionIsSuccess = true
-        result.acrtionMessage = i18nService.msg("default.updated.message", "", [""])
+        else{
+            result.acrtionIsSuccess = true
+            result.acrtionMessage = messageSource.getMessage("default.updated.message", [] as Object[], Locale.TAIWAN)
+        }
+
         return result
     }
 
