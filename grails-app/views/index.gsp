@@ -16,6 +16,17 @@
             height: 1080px;
         }
     </style>
+    <script type="text/javascript">
+        function forwardApp(closeAppId,changId,appName,forwardURL) {
+            console.log("changId = "+changId)
+            console.log("appName = "+appName)
+
+            closeApp(closeAppId);
+            setTimeout(function(){
+                changeIframeMain(forwardURL,changId,appName);
+            }, 20);
+        }
+    </script>
 </head>
 
 <body>

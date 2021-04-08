@@ -17,7 +17,15 @@ class Ex100Controller {
      * page: 新增資料頁面
      */
     def addPage = {
-        render view: "/ex/ex100/addPage"
+        render view: "/ex/ex100/addPage", model: [ex100I: new Ex100()]
+    }
+
+    /**
+     * page: 編輯資料頁面
+     */
+    def editPage = {
+        Ex100 ex100I = Ex100.get(params.id)
+        render view: "/ex/ex100/editPage", model: [ex100I:ex100I]
     }
 
     /**
@@ -29,7 +37,12 @@ class Ex100Controller {
             result.acrtionMessage = g.renderErrors( bean:result.bean,as:'list')
         }
         else{
-            result.forWardId = result.bean?.id.toString()
+            //更新tab資訊
+            result.tabId = result?.bean?.id.toString()
+            result.tabName = result.bean?.string
+            result.forWardUrl = createLink(controller: 'ex100',action: 'editPage',params: [
+                    id:result.bean?.id,
+            ])
         }
         render result as JSON
     }

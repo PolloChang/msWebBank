@@ -33,6 +33,41 @@
     $(function() {
         $(".searchForm .form-group").addClass("border");
     });
+
+    function saveData(formId,actionUrl) {
+        jQuery.ajax({
+            url:actionUrl,
+            data: $('#'+formId).serialize(),
+            type: "POST",
+            ataType: "JSON",
+            success: function (json) {
+                if(json.acrtionIsSuccess){
+                    parent.forwardApp('${params?.changId}',json.tabId,json.tabName,json.forWardUrl);
+                }
+                else{
+                    Swal.fire('失敗','儲存失敗','error')
+                        .then((result) => {
+                            var alertDiv = jQuery(document.createElement("div"));
+                            alertDiv.attr("class","alert alert-danger message");
+                            alertDiv.attr("role","alert");
+                            alertDiv.append(json.acrtionMessage);
+                            jQuery('#message').append(alertDiv);
+                        });
+                }
+            },
+            beforeSend:function(){
+                $(".message ").alert('close');
+            },
+            statusCode: {
+                404: function() {
+                    Swal.fire('400','找不到頁面','warning');
+                },
+                500:function() {
+                    Swal.fire('500','系統發生錯誤','warning');
+                }
+            }
+        });
+    }
 </script>
 </body>
 </html>

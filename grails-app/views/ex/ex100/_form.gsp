@@ -5,13 +5,13 @@
             ${message(code: "ex100.numbers.label")}
         </th>
         <td>
-            <bootstrap:numberField name="ex100.numbers" value="" />
+            <bootstrap:numberField name="ex100.numbers" value="${ex100I?.numbers}" />
         </td>
         <th>
             ${message(code: "ex100.amts.label")}
         </th>
         <td>
-            <bootstrap:textField name="ex100.amts" value="" />
+            <bootstrap:textField name="ex100.amts" value="${ex100I?.amts}" />
         </td>
     </tr>
     <tr>
@@ -19,14 +19,14 @@
             ${message(code: "ex100.string.label")}
         </th>
         <td>
-            <bootstrap:numberField name="ex100.string" value="" />
+            <bootstrap:textField name="ex100.string" value="${ex100I?.string}" />
         </td>
         <th>
             ${message(code: "ex100.status.label")}
         </th>
         <td>
             <bootstrap:multipleSelect
-                    name="ex100.status" value=""
+                    name="ex100.status" value="${ex100I?.status}"
                     from="${[[key:'',val:'---']]}"
                     optionKey="key" optionValue="val"
             />
@@ -37,7 +37,7 @@
             ${message(code: "ex100.texts.label")}
         </th>
         <td colspan="3">
-            <bootstrap:textarea name="ex100.texts" value="" />
+            <bootstrap:textarea name="ex100.texts" value="${ex100I?.texts}" />
         </td>
     </tr>
     <tr>
@@ -45,13 +45,13 @@
             ${message(code: "ex100.idno.label")}
         </th>
         <td>
-            <bootstrap:textField name="ex100.idno" value="" />
+            <bootstrap:textField name="ex100.idno" value="${ex100I?.idno}" />
         </td>
         <th>
             ${message(code: "ex100.name.label")}
         </th>
         <td>
-            <bootstrap:textField name="ex100.name" value="" />
+            <bootstrap:textField name="ex100.name" value="${ex100I?.name}" />
         </td>
     </tr>
     <tr>
@@ -60,7 +60,7 @@
         </th>
         <td>
             <bootstrap:multipleSelect
-                    name="ex100.sex" value=""
+                    name="ex100.sex" value="${ex100I?.sex}"
                     from="${[[key:'',val:'---']]}"
                     optionKey="key" optionValue="val"
             />
@@ -69,7 +69,7 @@
             ${message(code: "ex100.birthday.label")}
         </th>
         <td>
-            <bootstrap:datepicker name="ex100.birthday" value="${new Date()}" />
+            <bootstrap:datepicker name="ex100.birthday" value="${ex100I?.birthday}" />
         </td>
     </tr>
     <tr>
@@ -77,7 +77,7 @@
             ${message(code: "ex100.unid.label")}
         </th>
         <td colspan="3">
-            <bootstrap:textField name="ex100.unid" value="" />
+            <bootstrap:textField name="ex100.unid" value="${ex100I?.unid}" />
         </td>
     </tr>
     <tr>
@@ -86,13 +86,13 @@
         </th>
         <td colspan="3">
             <bootstrap:addressSelect
-                    nameZip="ex100.zip" valueZip=""
-                    nameCitycode="ex100.citycode" valueCitycode=""
-                    nameTwnspcode="ex100.twnspcode" valueTwnspcode=""
-                    nameVilgcode="ex100.vilgcode" valueVilgcode=""
+                    nameZip="ex100.zip" valueZip="${ex100I?.zip}"
+                    nameCitycode="ex100.citycode" valueCitycode="${ex100I?.citycode}"
+                    nameTwnspcode="ex100.twnspcode" valueTwnspcode="${ex100I?.twnspcode}"
+                    nameVilgcode="ex100.vilgcode" valueVilgcode="${ex100I?.vilgcode}"
             />
-            <bootstrap:textField name="ex100.rode" value="" placeholder="${message(code: "ex100.rode.label")}" />
-            <bootstrap:textField name="ex100.addr" value="" placeholder="${message(code: "ex100.addr.label")}" />
+            <bootstrap:textField name="ex100.rode" value="${ex100I?.rode}" placeholder="${message(code: "ex100.rode.label")}" />
+            <bootstrap:textField name="ex100.addr" value="${ex100I?.addr}" placeholder="${message(code: "ex100.addr.label")}" />
         </td>
     </tr>
     </tbody>

@@ -181,8 +181,13 @@ class FormTagLib {
         boolean readonly = attrs.remove('readonly')?:false
         def formattedDate
         if(value instanceof String){
-            def date = new Date().parse("yyyy-MM-dd HH:mm:ss.f", value)
-            formattedDate = date.format("yyyy-MM-dd")
+            if(value != ""){
+                def date = new Date().parse("yyyy-MM-dd HH:mm:ss.f", value)
+                formattedDate = date.format("yyyy-MM-dd")
+            }
+            else {
+                formattedDate = ""
+            }
         }
         else if(value instanceof Date){
             formattedDate = "${value.calendarDate.year}-${String.format("%02d", value.calendarDate.month)}-${String.format("%02d", value.calendarDate.dayOfMonth)}"

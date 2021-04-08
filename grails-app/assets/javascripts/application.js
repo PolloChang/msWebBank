@@ -92,13 +92,30 @@ function changeIframeMain(srcValue,changId,appName) {
         tabPane.attr("role","tabpanel");
         tabPane.attr("aria-labelledby",tabAId);
         tabIframe.attr("id",tabIframeId);
+        tabIframe.attr("name",tabIframeId);
         tabIframe.attr("class","contentScreen");
         tabIframe.attr("frameborder","0");
-        tabIframe.attr("src",srcValue);
         tabPane.append(tabIframe);
         screenTabParent.append(tabPane);
 
+        var form, input;
+        form = document.createElement("form");
+        form.action = srcValue;
+        form.target =tabIframeId;
+        input = document.createElement("input");
+        input.type ="hidden";
+        input.name = "changId";
+        input.value = changId;
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+
         $(tabA).tab('show');
+
+        //避免form不斷增長
+        setTimeout(function(){
+            document.body.removeChild(form);
+        }, 20);
     }
 
 }
@@ -234,21 +251,6 @@ function forwardEditPageAfterDoSave(closeId,openId,forwardURL) {
     });
 }
 
-/**
- * 頁面刪除資料後的動作
- * @param closeId
- */
-function forwardEditPageAfterDoDelete(closeId) {
-    Swal.fire({
-        title: dataDeleteSuccess,
-        icon: 'success',
-        position:'top',
-        showConfirmButton: false,
-        timer: 1500
-    }).then((result) => {
-        parent.closeContent(closeId);
-    });
-}
 
 /**
  * 儲存失敗
