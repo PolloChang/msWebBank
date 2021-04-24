@@ -1,4 +1,10 @@
-<table class="table edit-black">
+<table class="table table-bordered edit-black">
+    <colgroup>
+        <col width="15%"/>
+        <col width="35%"/>
+        <col width="15%"/>
+        <col width="35%"/>
+    </colgroup>
     <tbody>
     <tr>
         <th>

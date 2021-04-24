@@ -21,6 +21,7 @@
     <g:hiddenField name="ex100.id" value="${ex100I?.id}"/>
     <g:hiddenField name="ex100.version" value="${ex100I?.version}"/>
     <g:render template="/ex/ex100/form" model="[ex100I:ex100I]" />
+    <g:render template='/public/updateMessage' model='[instance: ex100I]'/>
 </form>
 <div>
     <div class="btn-group" role="group">

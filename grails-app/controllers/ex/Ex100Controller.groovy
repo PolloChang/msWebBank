@@ -28,6 +28,9 @@ class Ex100Controller {
         render view: "/ex/ex100/editPage", model: [ex100I:ex100I]
     }
 
+    /**
+     * action: 查詢資料
+     */
     def filter = {
         LinkedHashMap result = ex100Service.filter(params)
         render result as JSON
@@ -39,15 +42,34 @@ class Ex100Controller {
     def ex100Insert(){
         LinkedHashMap result = ex100Service.doInsert(params)
         if(!result.acrtionIsSuccess){
-            result.acrtionMessage = g.renderErrors( bean:result.bean,as:'list')
+            result.acrtionMessage = g.renderErrors( bean:result.bean,as:'list') as Object
         }
         else{
             //更新tab資訊
-            result.tabId = result?.bean?.id.toString()
+            result.tabId = result?.bean?.id?.toString()
             result.tabName = result.bean?.string
             result.forWardUrl = createLink(controller: 'ex100',action: 'editPage',params: [
                     id:result.bean?.id,
-            ])
+            ]) as Object
+        }
+        render result as JSON
+    }
+
+    /**
+     * action: 更新資料
+     */
+    def ex100Update(){
+        LinkedHashMap result = ex100Service.doUpdate(params)
+        if(!result.acrtionIsSuccess){
+            result.acrtionMessage = g.renderErrors( bean:result.bean,as:'list') as Object
+        }
+        else{
+            //更新tab資訊
+            result.tabId = result?.bean?.id?.toString()
+            result.tabName = result.bean?.string
+            result.forWardUrl = createLink(controller: 'ex100',action: 'editPage',params: [
+                    id:result.bean?.id,
+            ]) as Object
         }
         render result as JSON
     }
