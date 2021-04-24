@@ -47,7 +47,7 @@
         </div>
         <div class="form-group row">
             <div class="btn-group" role="group">
-                <bootstrap:button name="search" showText="查詢"/>
+                <bootstrap:button name="search" onclick="searchData()" showText="查詢"/>
                 <bootstrap:button name="clear" inputType="clear" class="btn-light" showText="清除條件"/>
                 <bootstrap:button name="print" class="btn-secondary" showText="匯出"/>
             </div>
@@ -66,8 +66,21 @@
 </form>
 
 <script type="text/javascript">
+
+    /**
+     * action: 新增資料
+     */
     function addData() {
         parent.changeIframeMain('${createLink(controller: 'ex100',action: 'addPage')}','blank','新增頁面');
+    }
+
+    /**
+     * action: 查詢
+     */
+    function searchData() {
+        $('#search-result').bootstrapTable('refresh', {
+            url: '${createLink(controller: 'ex100' ,action: 'filter')}/?' + $('#search').serialize()
+        });
     }
 </script>
 
