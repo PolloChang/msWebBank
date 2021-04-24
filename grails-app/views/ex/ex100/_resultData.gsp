@@ -1,48 +1,41 @@
-<table id="table">
+<table
+        id="search-result"
+        data-toggle="table"
+        data-search="true"
+        data-pagination="true"
+        data-page-list="[10, 25, 50, 100, 200, All]"
+>
     <thead>
     <tr>
-        <th data-field="id">ID</th>
-        <th data-field="name">Item Name</th>
-        <th data-field="price">Item Price</th>
+        <th data-formatter="formatterDataSerialNumber">#</th>
+        <th data-field="id" data-formatter="editDataFormatter">${message(code: "default.button.edit.label")}</th>
+        <th data-field="status">${message(code: "ex100.status.label")}</th>
+        <th data-field="addr">${message(code: "ex100.addr.label")}</th>
+        <th data-field="birthday">${message(code: "ex100.birthday.label")}</th>
+        <th data-field="name">${message(code: "ex100.name.label")}</th>
+        <th data-field="citycode">${message(code: "ex100.citycode.label")}</th>
+        <th data-field="issure">${message(code: "ex100.issure.label")}</th>
+        <th data-field="texts">${message(code: "ex100.texts.label")}</th>
+        <th data-field="numbers">${message(code: "ex100.numbers.label")}</th>
+        <th data-field="idno">${message(code: "ex100.idno.label")}</th>
+        <th data-field="rode">${message(code: "ex100.rode.label")}</th>
+        <th data-field="string">${message(code: "ex100.string.label")}</th>
+        <th data-field="sex">${message(code: "ex100.sex.label")}</th>
+        <th data-field="twnspcode">${message(code: "ex100.twnspcode.label")}</th>
+        <th data-field="vilgcode">${message(code: "ex100.vilgcode.label")}</th>
+        <th data-field="unid">${message(code: "ex100.unid.label")}</th>
+        <th data-field="notes">${message(code: "ex100.notes.label")}</th>
+        <th data-field="zip">${message(code: "ex100.zip.label")}</th>
+        <th data-field="addrFull">${message(code: "ex100.addr.label")}</th>
+
     </tr>
     </thead>
 </table>
 <script>
-    var $table = $('#table')
+
+
 
     $(function() {
-        var data = [
-            {
-                'id': 0,
-                'name': 'Item 0',
-                'price': '$0'
-            },
-            {
-                'id': 1,
-                'name': 'Item 1',
-                'price': '$1'
-            },
-            {
-                'id': 2,
-                'name': 'Item 2',
-                'price': '$2'
-            },
-            {
-                'id': 3,
-                'name': 'Item 3',
-                'price': '$3'
-            },
-            {
-                'id': 4,
-                'name': 'Item 4',
-                'price': '$4'
-            },
-            {
-                'id': 5,
-                'name': 'Item 5',
-                'price': '$5'
-            }
-        ]
-        $table.bootstrapTable({data: data})
+
     });
 </script>

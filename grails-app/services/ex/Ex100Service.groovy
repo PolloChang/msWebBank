@@ -24,7 +24,7 @@ class Ex100Service implements DataBinder {
      * @param params
      * @return  result[Map]
      */
-    def filter(GrailsParameterMap params){
+    LinkedHashMap filter(GrailsParameterMap params){
         LinkedHashMap result = [:]
         def dateTransform = []
 
@@ -90,10 +90,11 @@ class Ex100Service implements DataBinder {
 
         ex100List.each {
             def row = [:]
-            row.id = it?.id.toString()
+            row.id = it?.id?.toString()
+            row.showPageName = it?.name?:"編輯資料"
             row.status = it?.statusDesc
             row.addr = it?.addr
-            row.birthdy = it?.birthdy
+            row.birthday = it?.birthday
             row.name = it?.name
             row.citycode = it?.citycodeDesc
             row.issure = it?.issure

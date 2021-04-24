@@ -74,6 +74,11 @@
         parent.changeIframeMain('${createLink(controller: 'ex100',action: 'addPage')}','blank','新增頁面');
     }
 
+
+    function editData(id,showPageName) {
+        parent.changeIframeMain('${createLink(controller: 'ex100',action: 'editPage')}/'+id,id,showPageName);
+    }
+
     /**
      * action: 查詢
      */

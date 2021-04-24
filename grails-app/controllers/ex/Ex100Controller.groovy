@@ -28,6 +28,11 @@ class Ex100Controller {
         render view: "/ex/ex100/editPage", model: [ex100I:ex100I]
     }
 
+    def filter = {
+        LinkedHashMap result = ex100Service.filter(params)
+        render result as JSON
+    }
+
     /**
      * action: 新增資料
      */

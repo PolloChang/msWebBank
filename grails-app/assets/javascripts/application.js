@@ -13,6 +13,7 @@
 //= require bootstrap-table/bootstrap-table.min.js
 //= require bootstrap-table/bootstrap-table-locale-all.min.js"
 //= require jquery-ui/jquery-ui.min.js
+//= require application-boosstrap-table-formatter.js
 //= encoding UTF-8
 /**
  * 參數宣告
@@ -316,60 +317,3 @@ function clearFrom(){
 $(function() {
 
 });
-
-// bootstrapTable常用
-
-/**
- * 資料流水號
- * @param value
- * @param row
- * @param index
- * @returns {number}
- */
-function formatterDataSerialNumber(value, row, index) {
-    return Number(index) + 1;
-}
-
-/**
- * 日期格式化
- * @param value
- * @param row
- * @returns {*}
- */
-function formatterDatetime(value,row) {
-    if(value != null){
-        return new Date(value).Format("yyyy-MM-dd");
-    }
-    else{
-        return '-'
-    }
-}
-
-/**
- * 金錢格式化
- * @param value
- */
-function formatterNumberAmt(value) {
-    if(value!=null){
-        return numeral(value).format('$0,0.00');
-    }
-}
-
-/**
- * 數字格式化
- * @param value
- * @returns {*}
- */
-function formatterNumber(value) {
-    if(value!=null){
-        return numeral(value).format('0,0');
-    }
-}
-
-/**
- * 總計
- * @returns {string}
- */
-function footerFormatterTotal(data) {
-    return '總計：'+data.length
-}
