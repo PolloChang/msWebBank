@@ -19,7 +19,7 @@ class Ex100 {
     Integer     numbers
     Long        amts
     String		string
-    Clob        texts
+    String      texts
     String		status
     String		idno
     String		name
@@ -56,7 +56,7 @@ class Ex100 {
         numbers             column: "NUMBERS"       ,comment: "數值"
         amts                column: "AMTS"          ,comment: "金額"
         string              column: "STRING"        ,comment: "字串"
-        texts               column: "TEXTS"         ,comment: "文章"
+        texts               column: "TEXTS"         ,sqlType: 'text'            ,comment: "文章"
         status              column: "STATUS"        ,comment: "案件狀態,BS101.EX100_STATUS"
         statusDesc          ignoreNotFound: true    ,comment: "案件狀態中文敘述"           ,formula: "(SELECT BS.TYPEDESC FROM BS101 BS WHERE BS.PTYPE='EX100_STATUS' AND BS.PCODE=STATUS  )"
         idno                column: "IDNO"          ,comment: "身分證字號"
@@ -106,6 +106,9 @@ class Ex100 {
     /**
      * 共同儲存欄位
      */
-    ArrayList updateBindMap = ['numbers', 'amts','string','status','idno','name','sex','birthday','unid',
-                               'zip','citycode','twnspcode','vilgcode','addr']
+    ArrayList updateBindMap = [
+        'numbers', 'amts','string','texts','status',
+        'idno','name','sex','birthday','unid',
+        'zip','citycode','twnspcode','vilgcode','addr'
+    ]
 }

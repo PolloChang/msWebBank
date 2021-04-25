@@ -302,7 +302,7 @@ class FormTagLib {
         out << '<div class="form-row">'
         if(nameZip){
             def nameZipAttrs = [:]
-            nameZipAttrs.type = "text"
+            nameZipAttrs.type = "number"
             nameZipAttrs.id = idZip
             nameZipAttrs.name = nameZip
             nameZipAttrs.value = valueZip

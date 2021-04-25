@@ -151,7 +151,6 @@ class Ex100Service implements DataBinder {
         LinkedHashMap result = [:]
         result.bean = ex100I
         closure(ex100I)
-        println params.ex100
 
         bindData(ex100I, params["ex100"], [include:ex100I.updateBindMap])
 
