@@ -21,7 +21,7 @@
         <td colspan="3">
             <span class="text-black-50">
                 <g:formatDate date="${instance?.lastUpdated}" format="yyyy-MM-dd HH24:mm:ss" />
-                ${instance?.manLastUpdated} ${message(code:"default.manLastUpdated.label")}
+                ${instance?.manLastUpdated} ${message(code:"default.manLastUpdated.label")} ${message(code:"default.version.label")} : v${instance?.version}
             </span>
         </td>
     </tr>
