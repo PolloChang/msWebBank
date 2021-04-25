@@ -5,6 +5,7 @@ import bs.Bs201
 import bs.Bs202
 import bs.Bs203
 import grails.gorm.transactions.Transactional
+import grails.web.servlet.mvc.GrailsParameterMap
 
 import java.sql.Date
 import java.util.regex.Matcher
@@ -61,8 +62,8 @@ class ToolBoxService {
     def paramsTextDateTransform  = { attrs ->
 
         def returnValue = [:]
-        def params = attrs.params
-        def list = attrs.list
+        GrailsParameterMap params = attrs.params
+        List list = attrs.list
         def domain = attrs.domain
         def s = (attrs.sqldate == "true" || attrs.sqldate == true)
         params.each{ key, val ->

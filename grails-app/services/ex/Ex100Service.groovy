@@ -26,7 +26,7 @@ class Ex100Service implements DataBinder {
      */
     LinkedHashMap filter(GrailsParameterMap params){
         LinkedHashMap result = [:]
-        def dateTransform = []
+        List dateTransform = []
 
         //查詢條件集
         def searchData = [:]

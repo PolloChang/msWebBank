@@ -66,10 +66,37 @@ function footerFormatterTotal(data) {
  * 編輯資料
  */
 function editDataFormatter(value,row){
-    var returnVal;
+    let returnVal;
     returnVal = '<button type="button" class="btn btn-primary" onclick="editData(\''+row.id+'\',\''+row.showPageName+'\')">編輯</button>';
     return returnVal;
 }
 
+/**
+ * 日期顯示
+ * @param value
+ * @param row
+ * @returns {string}
+ */
+function dateFormatter(value,row) {
+    let returnVal;
+    let dateValue = new Date(value);
+    returnVal = dateValue.getFullYear()+"-"+(dateValue.getMonth()+1)+"-"+dateValue.getDate();
+    return returnVal;
+
+}
+
+
+function textFormatter(value,row) {
+    let returnVal;
+
+    if(value.length >= 10){
+        returnVal = value.substr(1,10)+'...';
+    }
+    else{
+        returnVal = value;
+    }
+
+    return returnVal;
+}
 
 
