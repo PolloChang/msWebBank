@@ -5,6 +5,10 @@ import org.grails.buffer.GrailsPrintWriter
 import org.grails.encoder.CodecLookup
 import org.grails.encoder.Encoder
 
+import java.sql.Timestamp
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
 class FormTagLib {
 
     CodecLookup codecLookup
@@ -179,7 +183,9 @@ class FormTagLib {
         def value = attrs.remove('value')?:""
         String Class = attrs.remove('class')?:""
         boolean readonly = attrs.remove('readonly')?:false
-        def formattedDate
+        String formattedDate
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd")
+
         if(value instanceof String){
             if(value != ""){
                 def date = new Date().parse("yyyy-MM-dd HH:mm:ss.f", value)
@@ -189,8 +195,11 @@ class FormTagLib {
                 formattedDate = ""
             }
         }
+        else if(value instanceof Timestamp){
+            formattedDate = sdf.format(value)
+        }
         else if(value instanceof Date){
-            formattedDate = "${value.calendarDate.year}-${String.format("%02d", value.calendarDate.month)}-${String.format("%02d", value.calendarDate.dayOfMonth)}"
+            formattedDate = sdf.format(value)
         }
         else{
             formattedDate = ""

@@ -106,6 +106,6 @@ class Ex100 {
     /**
      * 共同儲存欄位
      */
-    ArrayList updateBindMap = ['numbers', 'amts','string','status','idno','name','sex','birthdy','unid',
+    ArrayList updateBindMap = ['numbers', 'amts','string','status','idno','name','sex','birthday','unid',
                                'zip','citycode','twnspcode','vilgcode','addr']
 }
