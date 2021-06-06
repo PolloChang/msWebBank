@@ -93,8 +93,6 @@ class ToolBoxService {
       * @return 是整數返回true,否則返回false
      */
     def boolean isNumeric(String str){
-        println 'isNumeric'
-        println str
         Pattern pattern = Pattern.compile("[0-9]*");
         Matcher isNum = pattern.matcher(str);
         if( !isNum.matches() ){

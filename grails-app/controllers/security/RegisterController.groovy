@@ -25,7 +25,6 @@ class RegisterController {
      * @return
      */
     def register() {
-        println 28
         if(!params.password.equals(params.repassword)) {
             flash.message = "Password and Re-Password not match"
             redirect action: "index"
