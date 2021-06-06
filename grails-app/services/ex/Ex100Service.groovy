@@ -153,7 +153,8 @@ class Ex100Service implements DataBinder {
         closure(ex100I)
 
         bindData(ex100I, params["ex100"], [include:ex100I.updateBindMap])
-        if(ex100I.version != (params.ex100.version as int)){
+        int pageDataVersion = params.ex100.version?(params.ex100?.version as int):0
+        if(ex100I.version != pageDataVersion && params.ex100.id){
 
             result.dataVersionDifferent = true
             ex100I.discard()
@@ -194,17 +195,27 @@ class Ex100Service implements DataBinder {
         LinkedHashMap result = [:]
         Ex100 ex100I = Ex100.get(params.ex100.id)
 
-        try{
-            ex100I.delete(flush: true)
-            result.acrtionIsSuccess = true
-            result.acrtionMessage=i18nService.msg("default.deleted.message", "", [""])
+        if(ex100I.version != (params.ex100.version as int)){
+            result.dataVersionDifferent = true
+            ex100I.discard()
+        }else{
+
+            try{
+                ex100I.delete(flush: true)
+                result.acrtionIsSuccess = true
+                result.acrtionMessage = messageSource.getMessage("default.deleted.message", [] as Object[], Locale.TAIWAN)
+            }
+            catch (Exception ex){
+                result.acrtionIsSuccess = false
+                result.acrtionMessage = messageSource.getMessage("default.deleted.message", [] as Object[], Locale.TAIWAN)
+                ex100I.discard()
+            }
+            finally {
+
+            }
+
         }
-        catch (Exception ex){
-            result.acrtionIsSuccess = false
-            result.acrtionMessage=i18nService.msg("default.not.deleted.message", "", [""])
-        }
-        finally {
-            return result
-        }
+
+        return result
     }
 }

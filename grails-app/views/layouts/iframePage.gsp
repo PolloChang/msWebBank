@@ -65,7 +65,14 @@
             ataType: "JSON",
             success: function (json) {
                 if(json.acrtionIsSuccess){
-                    parent.forwardApp('${params?.changId}',json.tabId,json.tabName,json.forWardUrl);
+                    Swal.fire({
+                        title:'儲存成功',
+                        text:'系統將重新整理資料',
+                        icon:'success',
+                        timer: 2000
+                    }).then((result) => {
+                            parent.forwardApp('${params?.changId}',json.tabId,json.tabName,json.forWardUrl);
+                        });
                 }else if(json.dataVersionDifferent){
                     Swal.fire('資料已異動','資料有被其他人異動過，請重新查詢後再繼續動作','warning')
                         .then((result) => {
@@ -98,6 +105,77 @@
                 }
             }
         });
+    }
+
+    /**
+     * 刪除資料
+     * @param formId
+     * @param actionUrl
+     * @param comfiremMessage
+     */
+    function deleteData(formId,actionUrl,comfiremMessage) {
+        if(comfiremMessage){
+            Swal.fire({
+                title: comfiremMessage,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '${message(code: 'default.button.confirm.yes.label')}',
+                cancelButtonText: '${message(code: 'default.button.confirm.no.label')}',
+            }).then((result) => {
+                if (result.value) {
+                    jQuery.ajax({
+                        url:actionUrl,
+                        data: $('#'+formId).serialize(),
+                        type: "POST",
+                        ataType: "JSON",
+                        success: function (json) {
+                            if(json.acrtionIsSuccess){
+                                Swal.fire({
+                                    title:'刪除成功',
+                                    text:'系統將關閉此分頁',
+                                    icon:'success',
+                                    timer: 2000
+                                }).then((result) => {
+                                    parent.closeApp('${params?.changId}');
+                                });
+
+                            }else if(json.dataVersionDifferent){
+                                Swal.fire('資料已異動','資料有被其他人異動過，請重新查詢後再繼續動作','warning')
+                                    .then((result) => {
+                                        var alertDiv = jQuery(document.createElement("div"));
+                                        alertDiv.attr("class","alert alert-danger message");
+                                        alertDiv.attr("role","alert");
+                                        alertDiv.append(json.acrtionMessage);
+                                        jQuery('#message').append(alertDiv);
+                                    });
+                            }else{
+                                Swal.fire('失敗','刪除失敗','error')
+                                    .then((result) => {
+                                        var alertDiv = jQuery(document.createElement("div"));
+                                        alertDiv.attr("class","alert alert-danger message");
+                                        alertDiv.attr("role","alert");
+                                        alertDiv.append(json.acrtionMessage);
+                                        jQuery('#message').append(alertDiv);
+                                    });
+                            }
+                        },
+                        beforeSend:function(){
+                            $(".message ").alert('close');
+                        },
+                        statusCode: {
+                            404: function() {
+                                Swal.fire('400','找不到頁面','warning');
+                            },
+                            500:function() {
+                                Swal.fire('500','系統發生錯誤','warning');
+                            }
+                        }
+                    });
+                }
+            })
+        }
     }
 </script>
 </body>

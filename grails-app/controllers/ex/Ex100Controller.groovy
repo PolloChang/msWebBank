@@ -73,4 +73,24 @@ class Ex100Controller {
         }
         render result as JSON
     }
+
+    /**
+     * action: 刪除資料
+     * @return
+     */
+    JSON ex100Delete(){
+        LinkedHashMap result = ex100Service.doDelete(params)
+        if(!result.acrtionIsSuccess){
+            result.acrtionMessage = g.renderErrors( bean:result.bean,as:'list') as Object
+        }
+        else{
+            //更新tab資訊
+            result.tabId = result?.bean?.id?.toString()
+            result.tabName = result.bean?.string
+            result.forWardUrl = createLink(controller: 'ex100',action: 'editPage',params: [
+                    id:result.bean?.id,
+            ]) as Object
+        }
+        render result as JSON
+    }
 }

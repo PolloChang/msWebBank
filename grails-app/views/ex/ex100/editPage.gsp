@@ -29,7 +29,7 @@
                           onclick="saveData('ex100-form','${createLink(controller: "ex100" ,action: "ex100Update")}');"
         />
         <bootstrap:button name="save" showText="${message(code: "default.button.delete.label")}" class="btn-danger"
-                          onclick="saveData('ex100-form','${createLink(controller: "ex100" ,action: "ex100Delete")}','${message(code: "default.button.delete.confirm.message")}');"
+                          onclick="deleteData('ex100-form','${createLink(controller: "ex100" ,action: "ex100Delete")}','${message(code: "default.button.delete.confirm.message")}');"
         />
         <script type="text/javascript">
 
