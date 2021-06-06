@@ -34,7 +34,30 @@
         $(".searchForm .form-group").addClass("border");
     });
 
-    function saveData(formId,actionUrl) {
+    /**
+     * 儲存資料
+     * */
+    function saveData(formId,actionUrl,comfiremMessage) {
+        if(comfiremMessage){
+            Swal.fire({
+                title: comfiremMessage,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '${message(code: 'default.button.confirm.yes.label')}',
+                cancelButtonText: '${message(code: 'default.button.confirm.no.label')}',
+            }).then((result) => {
+                if (result.value) {
+                    saveDataAction(formId,actionUrl);
+                }
+            })
+        } else{
+            saveDataAction(formId,actionUrl);
+        }
+    }
+
+    function saveDataAction(formId,actionUrl) {
         jQuery.ajax({
             url:actionUrl,
             data: $('#'+formId).serialize(),
@@ -43,8 +66,16 @@
             success: function (json) {
                 if(json.acrtionIsSuccess){
                     parent.forwardApp('${params?.changId}',json.tabId,json.tabName,json.forWardUrl);
-                }
-                else{
+                }else if(json.dataVersionDifferent){
+                    Swal.fire('資料已異動','資料有被其他人異動過，請重新查詢後再繼續動作','warning')
+                        .then((result) => {
+                            var alertDiv = jQuery(document.createElement("div"));
+                            alertDiv.attr("class","alert alert-danger message");
+                            alertDiv.attr("role","alert");
+                            alertDiv.append(json.acrtionMessage);
+                            jQuery('#message').append(alertDiv);
+                        });
+                }else{
                     Swal.fire('失敗','儲存失敗','error')
                         .then((result) => {
                             var alertDiv = jQuery(document.createElement("div"));

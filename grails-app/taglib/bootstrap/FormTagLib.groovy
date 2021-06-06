@@ -73,6 +73,7 @@ class FormTagLib {
         String classes = attrs.remove('class')?:"btn-primary"
         String showText = attrs.remove('showText')?:"按鈕"
         String onclick = attrs.remove('onclick')?:""
+        String comfiremMessage = attrs.remove('comfirem-message')?:""
 
         def writer = out
 

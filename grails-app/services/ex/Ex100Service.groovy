@@ -153,8 +153,12 @@ class Ex100Service implements DataBinder {
         closure(ex100I)
 
         bindData(ex100I, params["ex100"], [include:ex100I.updateBindMap])
+        if(ex100I.version != (params.ex100.version as int)){
 
-        if (ex100I.hasErrors() || !ex100I.save(flush: true)) { //失敗
+            result.dataVersionDifferent = true
+            ex100I.discard()
+        } else if (ex100I.hasErrors()) { //失敗
+
             def errorColumn = []
             ex100I.errors.allErrors.eachWithIndex  {item, index ->
                 errorColumn[index] = [item?.arguments,item?.defaultMessage]
@@ -163,8 +167,20 @@ class Ex100Service implements DataBinder {
             result.acrtionIsSuccess = false
         }
         else{
-            result.acrtionIsSuccess = true
-            result.acrtionMessage = messageSource.getMessage("default.updated.message", [] as Object[], Locale.TAIWAN)
+            try{
+                ex100I.save(flush: true)
+                result.acrtionIsSuccess = true
+            }catch(Exception ex){
+                result.acrtionIsSuccess = false
+                ex100I.discard()
+            }
+
+            if(result.acrtionIsSuccess){
+                result.acrtionMessage = messageSource.getMessage("default.updated.message", [] as Object[], Locale.TAIWAN)
+            }
+            else{
+                result.acrtionMessage = messageSource.getMessage("default.updated.message", [] as Object[], Locale.TAIWAN)
+            }
         }
 
         return result

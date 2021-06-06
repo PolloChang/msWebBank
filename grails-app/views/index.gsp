@@ -18,8 +18,6 @@
     </style>
     <script type="text/javascript">
         function forwardApp(closeAppId,changId,appName,forwardURL) {
-            console.log("changId = "+changId)
-            console.log("appName = "+appName)
 
             closeApp(closeAppId);
             setTimeout(function(){

@@ -25,7 +25,15 @@
 </form>
 <div>
     <div class="btn-group" role="group">
-        <bootstrap:button name="save" showText="儲存" onclick="saveData('ex100-form','${createLink(controller: "ex100" ,action: "ex100Update")}');"/>
+        <bootstrap:button name="save" showText="${message(code: "default.button.save.label")}"
+                          onclick="saveData('ex100-form','${createLink(controller: "ex100" ,action: "ex100Update")}');"
+        />
+        <bootstrap:button name="save" showText="${message(code: "default.button.delete.label")}" class="btn-danger"
+                          onclick="saveData('ex100-form','${createLink(controller: "ex100" ,action: "ex100Delete")}','${message(code: "default.button.delete.confirm.message")}');"
+        />
+        <script type="text/javascript">
+
+        </script>
     </div>
 </div>
 <script type="text/javascript">

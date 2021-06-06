@@ -17,7 +17,7 @@
             ${message(code: "ex100.amts.label")}
         </th>
         <td>
-            <bootstrap:textField name="ex100.amts" value="${ex100I?.amts}" />
+            <bootstrap:numberField name="ex100.amts" value="${ex100I?.amts}" />
         </td>
     </tr>
     <tr>
@@ -33,8 +33,9 @@
         <td>
             <bootstrap:multipleSelect
                     name="ex100.status" value="${ex100I?.status}"
-                    from="${[[key:'',val:'---']]}"
-                    optionKey="key" optionValue="val"
+                    from="${bs.Bs101.findAllByPtype('EX100_STSTUS')}"
+                    optionKey="pcode" optionValue="typedesc"
+                    noSelection="['':'---']"
             />
         </td>
     </tr>
@@ -67,8 +68,9 @@
         <td>
             <bootstrap:multipleSelect
                     name="ex100.sex" value="${ex100I?.sex}"
-                    from="${[[key:'',val:'---']]}"
-                    optionKey="key" optionValue="val"
+                    from="${bs.Bs101.findAllByPtype('GENDER')}"
+                    optionKey="pcode" optionValue="typedesc"
+                    noSelection="['':'---']"
             />
         </td>
         <th>
