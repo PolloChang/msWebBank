@@ -58,7 +58,7 @@ class Ex100 {
         string              column: "STRING"        ,comment: "字串"
         texts               column: "TEXTS"         ,sqlType: 'text'            ,comment: "文章"
         status              column: "STATUS"        ,comment: "案件狀態,BS101.EX100_STATUS"
-        statusDesc          ignoreNotFound: true    ,comment: "案件狀態中文敘述"           ,formula: "(SELECT BS.TYPEDESC FROM BS101 BS WHERE BS.PTYPE='EX100_STATUS' AND BS.PCODE=STATUS  )"
+        statusDesc          ignoreNotFound: true    ,comment: "案件狀態中文敘述"           ,formula: "(SELECT BS.TYPEDESC FROM BS101 BS WHERE BS.PTYPE='EX100_STSTUS' AND BS.PCODE=STATUS  )"
         idno                column: "IDNO"          ,comment: "身分證字號"
         name                column: "NAME"          ,comment: "姓名"
         sex                 column: "SEX"           ,comment: "性別,BS101.GENDER"

@@ -89,11 +89,13 @@ function dateFormatter(value,row) {
 function textFormatter(value,row) {
     let returnVal;
 
-    if(value.length >= 10){
-        returnVal = value.substr(1,10)+'...';
-    }
-    else{
-        returnVal = value;
+    if(value){
+        if(value.length >= 10){
+            returnVal = value.substr(1,10)+'...';
+        }
+        else{
+            returnVal = value;
+        }
     }
 
     return returnVal;
