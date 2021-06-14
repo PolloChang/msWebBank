@@ -39,7 +39,7 @@ class Ex100Controller {
     /**
      * action: 新增資料
      */
-    def ex100Insert(){
+    JSON ex100Insert(){
         LinkedHashMap result = ex100Service.doInsert(params)
         if(!result.acrtionIsSuccess){
             result.acrtionMessage = g.renderErrors( bean:result.bean,as:'list') as Object
@@ -58,7 +58,7 @@ class Ex100Controller {
     /**
      * action: 更新資料
      */
-    def ex100Update(){
+    JSON ex100Update(){
         LinkedHashMap result = ex100Service.doUpdate(params)
         if(!result.acrtionIsSuccess){
             result.acrtionMessage = g.renderErrors( bean:result.bean,as:'list') as Object

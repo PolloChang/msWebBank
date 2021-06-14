@@ -37,6 +37,8 @@ class Ex100Service implements DataBinder {
         searchData.equalList = ['sex','citycode','twnspcode','vilgcode','status']
         //相似
         searchData.likeList = ['string','texts','idno','name','unid','zip','addr']
+        //布林
+        searchData.booleanList = []
         //日期
         searchData.dateList = ['birthdy']
         searchData.dateList?.each{
@@ -86,6 +88,16 @@ class Ex100Service implements DataBinder {
                 }
             }
 
+            searchData.booleanList.each {field ->
+                if(params."${field}"){
+                    boolean booleanVal = false
+                    if(params."${field}" instanceof java.lang.String){
+                        booleanVal = Boolean.parseBoolean(params."${field}")
+                    }
+                    eq(field,booleanVal)
+                }
+            }
+
         }
 
         ex100List.each {
@@ -122,7 +134,7 @@ class Ex100Service implements DataBinder {
      * @param params
      * @return
      */
-    def doInsert(GrailsParameterMap params){
+    LinkedHashMap doInsert(GrailsParameterMap params){
         return _saveInstance(new Ex100(), params, { Ex100 ex100I ->
             ex100I.manCreated = '系統管理員'
             ex100I.validate()
@@ -134,7 +146,7 @@ class Ex100Service implements DataBinder {
      * @param params
      * @return
      */
-    def doUpdate(GrailsParameterMap params){
+    LinkedHashMap doUpdate(GrailsParameterMap params){
         return _saveInstance(Ex100.get(params.ex100.id), params, { Ex100 ex100I ->
             ex100I.lastUpdated = new Date()
             ex100I.manLastUpdated = '系統管理員'
@@ -147,7 +159,7 @@ class Ex100Service implements DataBinder {
      * @param params
      * @return result[LinkedHashMap]
      */
-    def _saveInstance(Ex100 ex100I,GrailsParameterMap params,Closure<?> closure) {
+    LinkedHashMap _saveInstance(Ex100 ex100I,GrailsParameterMap params,Closure<?> closure) {
         LinkedHashMap result = [:]
         result.bean = ex100I
         closure(ex100I)
@@ -173,6 +185,7 @@ class Ex100Service implements DataBinder {
                 result.acrtionIsSuccess = true
             }catch(Exception ex){
                 result.acrtionIsSuccess = false
+                ex.printStackTrace()
                 ex100I.discard()
             }
 
@@ -191,7 +204,7 @@ class Ex100Service implements DataBinder {
      * 刪除資料
      * @param params
      */
-    def doDelete(GrailsParameterMap params){
+    LinkedHashMap doDelete(GrailsParameterMap params){
         LinkedHashMap result = [:]
         Ex100 ex100I = Ex100.get(params.ex100.id)
 
@@ -209,6 +222,7 @@ class Ex100Service implements DataBinder {
                 result.acrtionIsSuccess = false
                 result.acrtionMessage = messageSource.getMessage("default.deleted.message", [] as Object[], Locale.TAIWAN)
                 ex100I.discard()
+                ex.printStackTrace()
             }
             finally {
 
