@@ -18,16 +18,18 @@
     </div>
     <div class="searchForm">
         <div class="form-group row">
-            <bootstrap:formItem labelTitle="${g.message(code: 'bsAppList.status.label')}" name="statusSelect" inputType="contents" >
+            <bootstrap:formItem labelTitle="${g.message(code: 'bs000.status.label')}" name="statusSelect" inputType="contents" >
                 <g:select name="status" id="status"
                           from="${bs.Bs101.findAllByPtype('APP_LIST_STATUS')}" optionKey="pcode" optionValue="typedesc" noSelection="['':'---']"
                           class="form-control"
                 />
             </bootstrap:formItem>
-            <bootstrap:formItem labelTitle="${g.message(code: 'bsAppList.showOnMenu.label')}" name="showOnMenuSelect" inputType="contents" >
-                <g:select name="showOnMenu" id="showOnMenu"
-                          from="${bs.Bs101.findAllByPtype('APP_LIST_STATUS')}" optionKey="pcode" optionValue="typedesc" noSelection="['':'---']"
-                          class="form-control"
+            <bootstrap:formItem labelTitle="${g.message(code: 'bs000.showOnMenu.label')}" name="showOnMenuSelect" inputType="contents" >
+                <bootstrap:multipleSelect
+                        name="showOnMenu"
+                        from="[[key:'false',val:'不顯示'],[key:'true',val:'顯示']]"
+                        optionKey="key" optionValue="val"
+                        noSelection="['':'---']"
                 />
             </bootstrap:formItem>
         </div>
@@ -58,12 +60,12 @@
      * action: 新增資料
      */
     function addData() {
-        parent.changeIframeMain('${createLink(controller: 'ex100',action: 'addPage')}','blank','新增頁面');
+        parent.changeIframeMain('${createLink(controller: 'bs',action: 'addPage')}','blank','新增頁面');
     }
 
 
     function editData(id,showPageName) {
-        parent.changeIframeMain('${createLink(controller: 'ex100',action: 'editPage')}/'+id,id,showPageName);
+        parent.changeIframeMain('${createLink(controller: 'bs',action: 'editPage')}/'+id,id,showPageName);
     }
 
     /**
@@ -71,7 +73,7 @@
      */
     function searchData() {
         $('#search-result').bootstrapTable('refresh', {
-            url: '${createLink(controller: 'ex100' ,action: 'filter')}/?' + $('#search').serialize()
+            url: '${createLink(controller: 'bs' ,action: 'filter')}/?' + $('#search').serialize()
         });
     }
 </script>

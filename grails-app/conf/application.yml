@@ -103,6 +103,7 @@ dataSource:
     driverClassName: org.mariadb.jdbc.Driver
     username: MSWEBBANK_DBA
     password: 'msWebBankDba..'
+    logSql: false
 
 environments:
     development:

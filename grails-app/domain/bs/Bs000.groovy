@@ -11,9 +11,9 @@ class Bs000 {
     UUID id
     Long		issure = 1
     String		notes
-    Date		dateCreated
+    Date		dateCreated = new Date()
     String		manCreated
-    Date		lastUpdated
+    Date		lastUpdated = new Date()
     String		manLastUpdated
     String		appName
     String		parentApp
@@ -51,7 +51,7 @@ class Bs000 {
         idx					column:"IDX",				comment:"排序"
         actionType			column:"ACTION_TYPE",		comment:"onlyFunction:單純執行程式,isDropdown:底下還有執行程式"
         showOnMenu			column: "SHOW_ON_MENU",		comment:"顯示在程式清單上"
-        showOnMenuDesc      ignoreNotFound: true    ,comment:"顯示在程式清單上中文敘述"              ,formula: "(SELECT BS.TYPEDESC FROM BS101 BS WHERE BS.PTYPE='APP_LIST_SHOW_ON_MENU' AND BS.PCODE=SHOW_ON_MENU  )"
+        showOnMenuDesc      ignoreNotFound: true    ,comment:"顯示在程式清單上中文敘述"              ,formula: "(SELECT BS.TYPEDESC FROM BS101 BS WHERE BS.PTYPE='BS000_SHOW_ON_MENU' AND BS.PCODE=SHOW_ON_MENU  )"
     }
 
 
@@ -78,11 +78,4 @@ class Bs000 {
      */
     ArrayList updateBindMap = ['appName','parentApp','appCname','appCnameI18n','status','controller','action','idx','actionType','showOnMenu']
 
-    def beforeInsert() {
-        dateCreated = new Date()
-        manCreated = '系統管理員'
-    }
-
-    def beforeUpdate(){
-    }
 }
