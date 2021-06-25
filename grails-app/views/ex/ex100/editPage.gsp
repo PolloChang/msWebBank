@@ -15,8 +15,7 @@
 <div>
     <icon:svg iconType="modeEdit" message="${message(code: "ex100.label")}"/>
 </div>
-<div id="message">
-</div>
+<div id="message" />
 <form id="ex100-form">
     <g:hiddenField name="ex100.id" value="${ex100I?.id}"/>
     <g:hiddenField name="ex100.version" value="${ex100I?.version}"/>

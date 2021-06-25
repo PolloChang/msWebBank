@@ -14,7 +14,7 @@
 <form id="search">
 
     <div>
-        <icon:svg iconType="search" message="查詢條件"/>
+        <icon:svg iconType="search" message="${message(code: "default.icon.search.label")}"/>
     </div>
     <div class="searchForm">
         <div class="form-group row">
@@ -58,7 +58,7 @@
     </div>
 
     <div>
-        <icon:svg iconType="list" message="查詢結果"/>
+        <icon:svg iconType="list" message="${message(code: "default.icon.list.label")}"/>
     </div>
     <div class="searchForm">
         <g:render template="/ex/ex100/resultData" />

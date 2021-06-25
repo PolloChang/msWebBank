@@ -45,7 +45,7 @@
         </th>
         <td>
             <bootstrap:multipleSelect
-                    name="bs000.controller" value="${bs000I?.status}"
+                    name="bs000.controller" value="${bs000I?.controller}"
                     from="${grailsApplication.controllerClasses.sort { it.fullName }}"
                     optionKey="logicalPropertyName" optionValue="fullName"
                     noSelection="['':'未設定']"

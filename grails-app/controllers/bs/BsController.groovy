@@ -21,7 +21,7 @@ class BsController {
      * page: 新增資料頁面
      */
     def addPage = {
-        render view: "/bs/bs000/addPage", model: [bs000I: new Bs000()]
+        render view: "/bs/bs000/addPage", model: [bs000I: new Bs000(showOnMenu: true,status: 5,issure: 2)]
     }
 
     /**
@@ -45,7 +45,6 @@ class BsController {
      */
     JSON bs000Insert(){
         LinkedHashMap result = bs000Service.doInsert(params)
-        println result.bean
         if(!result.acrtionIsSuccess){
             result.acrtionMessage = g.renderErrors( bean:result.bean,as:'list') as Object
         }
