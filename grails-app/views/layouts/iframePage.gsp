@@ -27,12 +27,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    /**
-     * 一進入頁面執行
-     */
-    $(function() {
-        $(".searchForm .form-group").addClass("border");
-    });
 
     /**
      * 儲存資料
@@ -94,7 +88,7 @@
                 }
             },
             beforeSend:function(){
-                $(".message ").alert('close');
+                $("div .message ").alert('close');
             },
             statusCode: {
                 404: function() {
@@ -162,7 +156,7 @@
                             }
                         },
                         beforeSend:function(){
-                            $(".message ").alert('close');
+                            $("div .message ").alert('close');
                         },
                         statusCode: {
                             404: function() {
@@ -177,6 +171,66 @@
             })
         }
     }
+
+    /**
+     * 打開Tab內容
+     * @param tabId
+     * @param tabContentId
+     */
+    function openTabContent(tabId,tabContentId,urlStr) {
+        let tabI = document.getElementById(tabId);
+        let tabContenI = jQuery(document.getElementById(tabContentId));
+        if(tabContenI.length){
+            jQuery(tabI).tab('show');
+        }else{
+            jQuery.ajax({
+                url: urlStr,
+                type: "POST",
+                aSync: false,
+                ataType: "html",
+                success: function (html) {
+                    tabContenI = document.createElement("div");
+                    tabContenI.id = tabContentId;
+                    tabContenI.innerHTML = html;
+                    tabI.appendChild(tabContenI);
+                    setTimeout(function(){
+                        jQuery(tabI).tab('show');
+                    }, 20);
+                },
+                error:function () {
+                    Swal.fire('錯誤','請洽系統管理員','error');
+                }
+            });
+        }
+    }
+
+    /**
+     * 一進入頁面執行
+     */
+    document.addEventListener("DOMContentLoaded",function() {
+
+        jQuery('#edit-tabs .active').each(function(){
+            let thisId = this.id;
+            let tabId = thisId+"-content";
+            let tabContentId = "edit-"+thisId+"-content";
+            let urlStr = this.dataset.url;
+            openTabContent(tabId,tabContentId,urlStr);
+
+        });
+
+        /*
+         * 點擊tab要做的事情
+         */
+        jQuery('#edit-tabs > li > a').click(function() {
+            let thisId = this.id;
+            let tabId = thisId+"-content";
+            let tabContentId = "edit-"+thisId+"-content";
+            let urlStr = this.dataset.url;
+            openTabContent(tabId,tabContentId,urlStr);
+        });
+
+        jQuery("table .searchForm .form-group").addClass("border");
+    });
 </script>
 </body>
 </html>

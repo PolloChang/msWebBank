@@ -9,6 +9,9 @@ import java.sql.Timestamp
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
+/**
+ * 系統表單tag
+ */
 class FormTagLib {
 
     CodecLookup codecLookup

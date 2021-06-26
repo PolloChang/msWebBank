@@ -21,7 +21,10 @@
     </form>
     <div>
         <div class="btn-group" role="group">
-            <bootstrap:button name="save" showText="儲存" onclick="saveData('ex100-form','${createLink(controller: "ex100" ,action: "ex100Insert")}');"/>
+            <bootstrap:button
+                    name="save" showText="${message(code: "default.button.save.label")}"
+                    onclick="saveData('ex100-form','${createLink(controller: "ex100" ,action: "ex100Insert")}');"
+            />
         </div>
     </div>
     <script type="text/javascript">
