@@ -17,7 +17,7 @@
     </div>
     <div id="message" />
     <form id="ex100-form">
-        <g:render template="/ex/ex100/form" model="[ex100I:ex100I]" />
+        <g:render template="/domainFroms/ex/ex100" model="[ex100I:ex100I]" />
     </form>
     <div>
         <div class="btn-group" role="group">
