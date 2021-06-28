@@ -176,13 +176,12 @@
      * 打開Tab內容
      * @param tabId
      * @param tabContentId
+     * @param urlStr
      */
     function openTabContent(tabId,tabContentId,urlStr) {
         let tabI = document.getElementById(tabId);
         let tabContenI = jQuery(document.getElementById(tabContentId));
-        if(tabContenI.length){
-            jQuery(tabI).tab('show');
-        }else{
+        if(tabI != null && tabContenI.length === 0){
             jQuery.ajax({
                 url: urlStr,
                 type: "POST",
@@ -194,7 +193,9 @@
                     tabContenI.innerHTML = html;
                     tabI.appendChild(tabContenI);
                     setTimeout(function(){
-                        jQuery(tabI).tab('show');
+                        jQuery(tabI).find("script").each(function () {
+                            eval(jQuery(this).text());
+                        });
                     }, 20);
                 },
                 error:function () {
@@ -209,7 +210,7 @@
      */
     document.addEventListener("DOMContentLoaded",function() {
 
-        jQuery('#edit-tabs .active').each(function(){
+        jQuery('a[data-type="editTab"], .active').each(function(){
             let thisId = this.id;
             let tabId = thisId+"-content";
             let tabContentId = "edit-"+thisId+"-content";
@@ -221,7 +222,7 @@
         /*
          * 點擊tab要做的事情
          */
-        jQuery('#edit-tabs > li > a').click(function() {
+        jQuery('a[data-type="editTab"]').click(function() {
             let thisId = this.id;
             let tabId = thisId+"-content";
             let tabContentId = "edit-"+thisId+"-content";
