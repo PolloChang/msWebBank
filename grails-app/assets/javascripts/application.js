@@ -61,7 +61,7 @@ function changeIframeMain(srcValue,changId,appName) {
     var changItem = jQuery(document.getElementById(tabAId));
 
     if(changItem.length) { //判斷有元素
-        $(changItem).tab('show');
+        // $(changItem).tab('show');
     }
     else {
         var tabA = jQuery(document.createElement("a"));

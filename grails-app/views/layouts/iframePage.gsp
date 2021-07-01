@@ -179,24 +179,19 @@
      * @param urlStr
      */
     function openTabContent(tabId,tabContentId,urlStr) {
-        let tabI = document.getElementById(tabId);
+        let tabI = jQuery(document.getElementById(tabId));
         let tabContenI = jQuery(document.getElementById(tabContentId));
-        if(tabI != null && tabContenI.length === 0){
+        if(tabI.length !== 0 && tabContenI.length === 0){
             jQuery.ajax({
                 url: urlStr,
                 type: "POST",
                 aSync: false,
-                ataType: "html",
+                dataType: "html",
                 success: function (html) {
                     tabContenI = document.createElement("div");
                     tabContenI.id = tabContentId;
                     tabContenI.innerHTML = html;
-                    tabI.appendChild(tabContenI);
-                    setTimeout(function(){
-                        jQuery(tabI).find("script").each(function () {
-                            eval(jQuery(this).text());
-                        });
-                    }, 20);
+                    tabI.html(tabContenI);
                 },
                 error:function () {
                     Swal.fire('錯誤','請洽系統管理員','error');
@@ -205,18 +200,28 @@
         }
     }
 
+
     /**
      * 一進入頁面執行
      */
     document.addEventListener("DOMContentLoaded",function() {
 
-        jQuery('a[data-type="editTab"], .active').each(function(){
+        jQuery('a[data-type="editTab"]:first').each(function(){
             let thisId = this.id;
             let tabId = thisId+"-content";
             let tabContentId = "edit-"+thisId+"-content";
             let urlStr = this.dataset.url;
             openTabContent(tabId,tabContentId,urlStr);
 
+        });
+
+        /**
+         * 點擊button 要做的事
+         */
+        jQuery('a[data-type="actionButton"]').click(function() {
+            console.log(237);
+            // let clickFunction = this.dataset.onclick;
+            // eval(clickFunction);
         });
 
         /*
@@ -229,6 +234,8 @@
             let urlStr = this.dataset.url;
             openTabContent(tabId,tabContentId,urlStr);
         });
+
+
 
         jQuery("table .searchForm .form-group").addClass("border");
     });
