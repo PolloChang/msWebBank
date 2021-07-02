@@ -9,6 +9,8 @@ import java.sql.Clob
  */
 class Ex100 {
     static auditable = [ignore: ['dateCreated', 'lastUpdated', 'manCreated', 'manLastUpdated']]
+    static hasMany = [ex110s:Ex110]
+
     UUID        id
     Long        issure = 2
     String      notes
