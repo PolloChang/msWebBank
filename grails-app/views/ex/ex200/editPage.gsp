@@ -24,23 +24,24 @@
 </div>
 
 <div class="mt-3 p-2">
-    <ul class="nav nav-tabs" id="edit-tabs" role="tablist">
+    <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active"
-               id="tab1" data-toggle="tab"
-               href="#tab1-content" role="tab"
-               aria-controls="profile" aria-selected="true"
+            <a id="tab1"
+               class="nav-link active"
+               href="#tab1-content"
+               data-toggle="tab"
+               data-type="editTab"
                data-url="${createLink(controller: "ex200", action:"tab1",params: [id:ex100I.id])}"
             >
                 Tab1
             </a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="tab2"
-               data-toggle="tab"
+            <a id="tab2"
+               class="nav-link"
                href="#tab2-content"
-               role="tab" aria-controls="contact"
-               aria-selected="false"
+               data-toggle="tab"
+               data-type="editTab"
                data-url="${createLink(controller: "ex200", action:"tab2",params: [id:ex100I.id])}"
             >
                 Tab2

@@ -54,4 +54,6 @@ class RequestMap implements Serializable {
 		httpMethod          nullable: true
 		url                 blank: false, unique: 'httpMethod'
 	}
+
+	def updateBindMap = ["configAttribute","httpMethod","url"]
 }

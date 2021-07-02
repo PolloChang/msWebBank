@@ -1,6 +1,8 @@
 package bs
 
+import ex.Ex100
 import grails.converters.JSON
+import security.RequestMapService
 
 /**
  * @author JamesChang
@@ -9,6 +11,7 @@ import grails.converters.JSON
 class BsController {
 
     Bs000Service bs000Service
+    RequestMapService requestMapService
 
     /**
      * page: 查詢頁面
@@ -30,6 +33,22 @@ class BsController {
     def editPage = {
         Bs000 bs000I = Bs000.get(params.id)
         render view: "/bs/bs000/editPage", model: [bs000I:bs000I]
+    }
+
+    /**
+     * page: 程式資訊
+     */
+    def tab1 = {
+        Bs000 bs000I = Bs000.get(params.id)
+        render template: "/bs/bs000/editTabs/tab1", model: [bs000I:bs000I]
+    }
+
+    /**
+     * page: 使用權限
+     */
+    def tab2 = {
+        Bs000 bs000I = Bs000.get(params.id)
+        render template: "/bs/bs000/editTabs/tab2", model: [bs000I:bs000I]
     }
 
     /**
@@ -95,6 +114,18 @@ class BsController {
                     id:result.bean?.id,
             ]) as Object
         }
+        render result as JSON
+    }
+
+    /**
+     * action: 查詢可以使用該程式的系統角色
+     * @return JSON
+     */
+    JSON filterRequestMap(){
+        if(params.url == ""){
+            params.url = "nothing"
+        }
+        LinkedHashMap result = requestMapService.filter(params)
         render result as JSON
     }
 }

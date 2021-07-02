@@ -21,6 +21,31 @@ class FormTagLib {
     static namespace = "bootstrap"
 
     /**
+     * 表單常用 table
+     */
+    Closure fromTable = {attrs,body ->
+        String name  = attrs.remove("name")?:""
+        String id  = attrs.remove("name")?:name
+        String classes  = attrs.remove("class")?:""
+        out << """
+        <table 
+            id="${id}" name="${name}" 
+            class="table table-bordered edit-black ${classes}"
+        >
+            <colgroup>
+                <col width="15%"/>
+                <col width="35%"/>
+                <col width="15%"/>
+                <col width="35%"/>
+            </colgroup>
+        """
+        out << body()
+        out << """
+        </table>
+        """
+    }
+
+    /**
      * 文字
      */
     Closure textField = { attrs ->
@@ -76,11 +101,15 @@ class FormTagLib {
         String classes = attrs.remove('class')?:"btn-primary"
         String showText = attrs.remove('showText')?:"按鈕"
         String onclick = attrs.remove('onclick')?:""
-        String comfiremMessage = attrs.remove('comfirem-message')?:""
 
         def writer = out
 
-        writer << "<button name='${inputName}' id='${id}' type=\"${type}\" class=\"btn btn-sm ${classes} \" onclick=\"${onclick}\" >"
+        writer << "<button name='${inputName}' id='${id}' type=\"${type}\" class=\"btn btn-sm ${classes} \" "
+        if(onclick != ""){
+            writer << " onclick=\"${onclick}\" "
+        }
+        outputAttributes(attrs, writer)
+        writer << ">"
         writer << showText
         writer << "</button>"
     }

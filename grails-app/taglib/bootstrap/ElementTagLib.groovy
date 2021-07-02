@@ -39,6 +39,24 @@ class ElementTagLib {
             </tr>
             </thead>
         </table>
+        <script type='text/javascript'>
+            jQuery(document.getElementById('${id}')).bootstrapTable();
+        </script>
+        """
+    }
+
+    /**
+     * 系統說明
+     */
+    Closure systemInfo = { attrs, body ->
+
+        out << """
+        <div class="border border">
+            <p class="border border-top-0 border-left-0 border-right-0 bg-light">系統說明</p>
+        """
+        out << body()
+        out << """
+        </div>
         """
     }
 }

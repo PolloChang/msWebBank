@@ -1,22 +1,14 @@
-package ex
+package security
 
+import grails.gorm.transactions.Transactional
 import grails.web.databinding.DataBinder
 import grails.web.servlet.mvc.GrailsParameterMap
-import grails.gorm.transactions.Transactional
 import org.springframework.context.MessageSource
 import sys.toolBox.ToolBoxService
 
-/**
- * Date/檔案建立日期: 2020-02-07
- *Time/檔案建立時間: 09:31
- * File Description/檔案描述:範例程式
- * @author JamesChang
- * @since Grails4.0.1
- */
 @Transactional
-class Ex100Service implements DataBinder {
-
-
+class RequestMapService implements DataBinder {
+    
     ToolBoxService toolBoxService
     MessageSource messageSource
 
@@ -33,15 +25,15 @@ class Ex100Service implements DataBinder {
         def searchData = [:]
         def showRows = []
 
-        searchData.equalIntegerLists = ['amts','numbers']
+        searchData.equalIntegerLists = []
         //相等
-        searchData.equalList = ['sex','citycode','twnspcode','vilgcode','status']
+        searchData.equalList = []
         //相似
-        searchData.likeList = ['string','texts','idno','name','unid','zip','addr']
+        searchData.likeList = []
         //布林
         searchData.booleanList = []
         //日期
-        searchData.dateList = ['birthdy']
+        searchData.dateList = []
         searchData.dateList?.each{
             dateTransform << "${it}1"
             dateTransform << "${it}2"
@@ -49,7 +41,7 @@ class Ex100Service implements DataBinder {
 
         params << toolBoxService.paramsTextDateTransform(params: params,list: dateTransform)
 
-        List<Ex100> ex100List = Ex100.createCriteria().list(params) {
+        List<RequestMap> requestMapList = RequestMap.createCriteria().list(params) {
             //必要條件
             'in'("issure", ['1'.toLong(),'2'.toLong()])
             searchData.equalIntegerLists.each {field ->
@@ -99,31 +91,20 @@ class Ex100Service implements DataBinder {
                 }
             }
 
+            if(params."url"){
+                sqlRestriction("INSTR(URL , '${params."url"}') > 0")
+            }
+
         }
 
-        ex100List.each {
+        requestMapList.each {
             def row = [:]
             row.id = it?.id?.toString()
-            row.showPageName = it?.name?:"編輯資料"
-            row.status = it?.statusDesc
-            row.addr = it?.addr
-            row.birthday = it?.birthday
-            row.name = it?.name
-            row.citycode = it?.citycodeDesc
-            row.issure = it?.issure
-            row.texts = it?.texts
-            row.numbers = it?.numbers
-            row.idno = it?.idno
-            row.rode = it?.rode
-            row.string = it?.string
-            row.sex = it?.sexDesc
-            row.twnspcode = it?.twnspcodeDesc
-            row.vilgcode = it?.vilgcodeDesc
-            row.unid = it?.unid
-            row.amts = it?.amts
-            row.notes = it?.notes
-            row.zip = it?.zip
-            row.addrFull = it?.addrFull
+            row.showPageName = "編輯資料"
+            row.configAttribute = it?.configAttribute?:""
+            row.httpMethod = it?.httpMethod?:""
+            row.url = it?.url?:""
+
             showRows << row
         }
         result.rows = showRows
@@ -136,9 +117,9 @@ class Ex100Service implements DataBinder {
      * @return
      */
     LinkedHashMap doInsert(GrailsParameterMap params){
-        return _saveInstance(new Ex100(), params, { Ex100 ex100I ->
-            ex100I.manCreated = '系統管理員'
-            ex100I.validate()
+        return _saveInstance(new RequestMap(), params, { RequestMap requestMapI ->
+            requestMapI.manCreated = '系統管理員'
+            requestMapI.validate()
         })
     }
 
@@ -148,10 +129,10 @@ class Ex100Service implements DataBinder {
      * @return
      */
     LinkedHashMap doUpdate(GrailsParameterMap params){
-        return _saveInstance(Ex100.get(params.ex100.id), params, { Ex100 ex100I ->
-            ex100I.lastUpdated = new Date()
-            ex100I.manLastUpdated = '系統管理員'
-            ex100I.validate()
+        return _saveInstance(RequestMap.get(params.requestMap.id), params, { RequestMap requestMapI ->
+            requestMapI.lastUpdated = new Date()
+            requestMapI.manLastUpdated = '系統管理員'
+            requestMapI.validate()
         })
     }
 
@@ -160,34 +141,34 @@ class Ex100Service implements DataBinder {
      * @param params
      * @return result[LinkedHashMap]
      */
-    LinkedHashMap _saveInstance(Ex100 ex100I,GrailsParameterMap params,Closure<?> closure) {
+    LinkedHashMap _saveInstance(RequestMap requestMapI,GrailsParameterMap params,Closure<?> closure) {
         LinkedHashMap result = [:]
-        result.bean = ex100I
-        closure(ex100I)
+        result.bean = requestMapI
+        closure(requestMapI)
 
-        bindData(ex100I, params["ex100"], [include:ex100I.updateBindMap])
-        int pageDataVersion = params.ex100.version?(params.ex100?.version as int):0
-        if(ex100I.version != pageDataVersion && params.ex100.id){
+        bindData(requestMapI, params["requestMap"], [include:requestMapI.updateBindMap])
+        int pageDataVersion = params.requestMap.version?(params.requestMap?.version as int):0
+        if(requestMapI.version != pageDataVersion && params.requestMap.id){
 
             result.dataVersionDifferent = true
-            ex100I.discard()
-        } else if (ex100I.hasErrors()) { //失敗
+            requestMapI.discard()
+        } else if (requestMapI.hasErrors()) { //失敗
 
             def errorColumn = []
-            ex100I.errors.allErrors.eachWithIndex  {item, index ->
+            requestMapI.errors.allErrors.eachWithIndex  {item, index ->
                 errorColumn[index] = [item?.arguments,item?.defaultMessage]
             }
-            ex100I.discard()
+            requestMapI.discard()
             result.acrtionIsSuccess = false
         }
         else{
             try{
-                ex100I.save(flush: true)
+                requestMapI.save(flush: true)
                 result.acrtionIsSuccess = true
             }catch(Exception ex){
                 result.acrtionIsSuccess = false
                 ex.printStackTrace()
-                ex100I.discard()
+                requestMapI.discard()
             }
 
             if(result.acrtionIsSuccess){
@@ -207,22 +188,22 @@ class Ex100Service implements DataBinder {
      */
     LinkedHashMap doDelete(GrailsParameterMap params){
         LinkedHashMap result = [:]
-        Ex100 ex100I = Ex100.get(params.ex100.id)
+        RequestMap requestMapI = RequestMap.get(params.requestMap.id)
 
-        if(ex100I.version != (params.ex100.version as int)){
+        if(requestMapI.version != (params.requestMap.version as int)){
             result.dataVersionDifferent = true
-            ex100I.discard()
+            requestMapI.discard()
         }else{
 
             try{
-                ex100I.delete(flush: true)
+                requestMapI.delete(flush: true)
                 result.acrtionIsSuccess = true
                 result.acrtionMessage = messageSource.getMessage("default.deleted.message", [] as Object[], Locale.TAIWAN)
             }
             catch (Exception ex){
                 result.acrtionIsSuccess = false
                 result.acrtionMessage = messageSource.getMessage("default.deleted.message", [] as Object[], Locale.TAIWAN)
-                ex100I.discard()
+                requestMapI.discard()
                 ex.printStackTrace()
             }
             finally {

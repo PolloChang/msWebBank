@@ -16,23 +16,45 @@
     <icon:svg iconType="modeEdit" message="${message(code: "bs000.label")}"/>
 </div>
 <div id="message" />
-<form id="bs000-form">
-    <g:hiddenField name="bs000.id" value="${bs000I?.id}"/>
-    <g:hiddenField name="bs000.version" value="${bs000I?.version}"/>
-    <g:render template="/domainFroms/bs/bs000" model="[bs000I:bs000I]" />
-    <g:render template='/public/updateMessage' model='[instance: bs000I]'/>
-</form>
-<div>
-    <div class="btn-group" role="group">
-        <bootstrap:button name="save" showText="${message(code: "default.button.save.label")}"
-                          onclick="saveData('bs000-form','${createLink(controller: "bs" ,action: "bs000Update")}');"
-        />
-        <bootstrap:button name="delete" showText="${message(code: "default.button.delete.label")}" class="btn-danger"
-                          onclick="deleteData('bs000-form','${createLink(controller: "bs" ,action: "bs000Delete")}','${message(code: "default.button.delete.confirm.message")}');"
-        />
+<div class="p-2 border">
+    <g:render template="/bs/bs000/information" model="[bs000I:bs000I]" />
+
+</div>
+<div class="mt-3 p-2">
+    <ul class="nav nav-tabs" id="edit-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a
+               id="tab1"
+               class="nav-link active"
+               href="#tab1-content"
+               data-toggle="tab"
+               data-type="editTab"
+               data-url="${createLink(controller: "bs", action:"tab1",params: [id:bs000I.id])}"
+            >
+                ${message(code: "bs000.page.edit.tab1.label")}
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a
+               id="tab2"
+               class="nav-link"
+               href="#tab2-content"
+               data-toggle="tab"
+               data-type="editTab"
+               data-url="${createLink(controller: "bs", action:"tab2",params: [id:bs000I.id])}"
+            >
+                ${message(code: "bs000.page.edit.tab2.label")}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade active show" id="tab1-content" role="tabpanel" ></div>
+        <div class="tab-pane fade" id="tab2-content" role="tabpanel" ></div>
     </div>
 </div>
 <script type="text/javascript">
+
+    
 
 </script>
 </body>

@@ -1,10 +1,4 @@
-<table class="table table-bordered edit-black">
-    <colgroup>
-        <col width="15%"/>
-        <col width="35%"/>
-        <col width="15%"/>
-        <col width="35%"/>
-    </colgroup>
+<bootstrap:fromTable>
     <tbody>
     <tr>
         <th>
@@ -104,4 +98,4 @@
         </td>
     </tr>
     </tbody>
-</table>
+</bootstrap:fromTable>
