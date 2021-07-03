@@ -39,4 +39,11 @@ class Ex110 {
         ex100I				(nullable:false, blank: false)
         string              (nullable:false, blank: false, maxSize: 20)
     }
+
+    /**
+     * 共同儲存欄位
+     */
+    ArrayList updateBindMap = [
+            'string'
+    ]
 }

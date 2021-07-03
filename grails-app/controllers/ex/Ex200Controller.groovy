@@ -8,6 +8,7 @@ import grails.converters.JSON
 class Ex200Controller {
 
     Ex100Service ex100Service
+    Ex110Service ex110Service
 
     /**
      * page: 查詢頁面
@@ -50,7 +51,7 @@ class Ex200Controller {
     /**
      * action: 查詢資料
      */
-    def filter = {
+    JSON filter(){
         LinkedHashMap result = ex100Service.filter(params)
         render result as JSON
     }
@@ -110,6 +111,14 @@ class Ex200Controller {
                     id:result.bean?.id,
             ]) as Object
         }
+        render result as JSON
+    }
+
+    /**
+     * action: 查詢資料
+     */
+    JSON filterEx110(){
+        LinkedHashMap result = ex110Service.filter(params)
         render result as JSON
     }
 }

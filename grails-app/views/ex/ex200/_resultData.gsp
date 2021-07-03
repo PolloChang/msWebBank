@@ -14,7 +14,4 @@
 </bootstrap:table>
 <script type="text/javascript">
 
-    $(function() {
-
-    });
 </script>

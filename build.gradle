@@ -75,6 +75,9 @@ dependencies {
 
     compile fileTree(dir: 'lib', include: '*.jar')
     compile 'org.grails.plugins:spring-security-core:4.0.3'
+
+    compile "org.grails:scaffolding-core:2.1.0"
+
 }
 
 bootRun {
