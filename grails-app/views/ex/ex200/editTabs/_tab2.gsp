@@ -12,7 +12,8 @@
 
                         <bootstrap:button
                                 name="search"
-                                data-type="actionButton"
+                                data-active="buttonActive"
+                                data-action="dofunction"
                                 data-onclick="tab2SearchData()"
                                 showText="${message(code:"default.button.refresh.label")}"
                         />
@@ -23,8 +24,11 @@
                         <bootstrap:button
                                 name="add"
                                 class="btn-success"
+                                data-active="buttonActive"
+                                data-action="openModel"
+                                data-modelid="edit-model"
+                                data-url="${createLink(controller: "ex200",action: "addEx110Model",params: [id:ex100I?.id])}"
                                 showText="${message(code: "default.button.create.label")}"
-                                onclick="addData();"
                         />
                     </div>
                 </td>
@@ -39,15 +43,12 @@
         <g:render template="/ex/ex200/editTabs/tab2ResultData" />
     </div>
 </form>
+<!-- Modal -->
+<bootstrap:modal name="edit-model" modalTitle="請輸入資料" >
+</bootstrap:modal>
 <script type="text/javascript">
     tab2SearchData();
 
-    /**
-     * action: 新增資料
-     */
-    function addData() {
-        console.log('1234');
-    }
     /**
      * action: 查詢
      */

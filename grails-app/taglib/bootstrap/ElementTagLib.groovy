@@ -59,4 +59,38 @@ class ElementTagLib {
         </div>
         """
     }
+
+    /**
+     * model 彈跳視窗
+     */
+    Closure modal = {attrs, body ->
+
+        if (!attrs.name) {
+            throwTagError("Tag [modal] is missing required attribute [name]")
+        }
+
+        String modalTitle = attrs.remove("modalTitle")?:""
+        String name = attrs.remove("name")
+        String id = attrs.remove("id")?:name
+
+        out << """
+            <div class="modal fade" id="${id}" tabindex="-1" aria-labelledby="${id}-modal-label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="${id}-modal-label">${modalTitle}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div id="${id}-model-content-self">
+        """
+        out << body()
+        out << """
+                        </div>
+                    </div>
+                </div>
+            </div>
+        """
+    }
 }

@@ -33,9 +33,6 @@
         <bootstrap:button name="delete" showText="${message(code: "default.button.delete.label")}" class="btn-danger"
                           onclick="deleteData('ex100-form','${createLink(controller: "ex100" ,action: "ex100Delete")}','${message(code: "default.button.delete.confirm.message")}');"
         />
-        <script type="text/javascript">
-
-        </script>
     </div>
 </div>
 <script type="text/javascript">

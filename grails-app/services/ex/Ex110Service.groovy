@@ -144,7 +144,7 @@ class Ex110Service implements DataBinder {
         result.bean = ex110I
         closure(ex110I)
 
-        bindData(ex110I, params["Ex110"], [include:ex110I.updateBindMap])
+        bindData(ex110I, params["ex110"], [include:ex110I.updateBindMap])
         int pageDataVersion = params.ex110.version?(params.ex110?.version as int):0
         if(ex110I.version != pageDataVersion && params.ex110.id){
 

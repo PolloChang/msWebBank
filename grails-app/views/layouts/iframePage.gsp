@@ -56,7 +56,7 @@
             url:actionUrl,
             data: $('#'+formId).serialize(),
             type: "POST",
-            ataType: "JSON",
+            dataType: "JSON",
             success: function (json) {
                 if(json.acrtionIsSuccess){
                     Swal.fire({
@@ -68,27 +68,13 @@
                             parent.forwardApp('${params?.changId}',json.tabId,json.tabName,json.forWardUrl);
                         });
                 }else if(json.dataVersionDifferent){
-                    Swal.fire('資料已異動','資料有被其他人異動過，請重新查詢後再繼續動作','warning')
-                        .then((result) => {
-                            var alertDiv = jQuery(document.createElement("div"));
-                            alertDiv.attr("class","alert alert-danger message");
-                            alertDiv.attr("role","alert");
-                            alertDiv.append(json.acrtionMessage);
-                            jQuery('#message').append(alertDiv);
-                        });
+                    dataVersionDifferent(json);
                 }else{
-                    Swal.fire('失敗','儲存失敗','error')
-                        .then((result) => {
-                            var alertDiv = jQuery(document.createElement("div"));
-                            alertDiv.attr("class","alert alert-danger message");
-                            alertDiv.attr("role","alert");
-                            alertDiv.append(json.acrtionMessage);
-                            jQuery('#message').append(alertDiv);
-                        });
+                    saveFalse(json);
                 }
             },
             beforeSend:function(){
-                $("div .message ").alert('close');
+                jQuery("div .message ").alert('close');
             },
             statusCode: {
                 404: function() {
@@ -215,15 +201,6 @@
 
         });
 
-        /**
-         * 點擊button 要做的事
-         */
-        jQuery('a[data-type="actionButton"]').click(function() {
-            console.log(237);
-            // let clickFunction = this.dataset.onclick;
-            // eval(clickFunction);
-        });
-
         /*
          * 點擊tab要做的事情
          */
@@ -235,9 +212,170 @@
             openTabContent(tabId,tabContentId,urlStr);
         });
 
-
-
         jQuery("table .searchForm .form-group").addClass("border");
+
+
+    });
+
+    /**
+     * 監聽button 事件
+     */
+    jQuery(document).off('click', 'button[data-active="buttonActive"]');
+    jQuery(document).on('click','button[data-active="buttonActive"]',function () {
+        let doAction = this.dataset.action;
+        let url,formId,filterFunction;
+
+        switch (doAction) {
+
+            /*開啟model*/
+            case 'openModel':
+                let modelId = this.dataset.modelid;
+                url = this.dataset.url;
+                renderModelContent(modelId,url);
+                break;
+            /*model 儲存*/
+            case 'modelsave':
+                url = this.dataset.url;
+                formId = this.dataset.formid;
+                filterFunction = this.dataset.filterfun;
+                jQuery.ajax({
+                    url: url,
+                    data: jQuery('#'+formId).serialize(),
+                    type: "POST",
+                    aSync: false,
+                    dataType: "JSON",
+                    success: function (json) {
+                        if(json.acrtionIsSuccess){
+                            Swal.fire({
+                                title:'儲存成功',
+                                icon:'success',
+                                timer: 2000
+                            }).then((result) => {
+                                renderModelContent(json.modelId,json.forWardUrl);
+                            });
+                            eval(filterFunction);
+                        }else if(json.dataVersionDifferent){
+                            dataVersionDifferent(json);
+                        }else{
+                            saveFalse(json);
+                        }
+                    },
+                    error:function () {
+                        Swal.fire('錯誤','請洽系統管理員','error');
+                    },
+                    beforeSend:function(){
+                        jQuery("div .message ").alert('close');
+                    },
+                    statusCode: {
+                        404: function() {
+                            Swal.fire('400','找不到頁面','warning');
+                        },
+                        500:function() {
+                            Swal.fire('500','系統發生錯誤','warning');
+                        }
+                    }
+                });
+
+                break;
+            /*model 刪除*/
+            case 'modelDelete':
+                url = this.dataset.url;
+                formId = this.dataset.formid;
+                filterFunction = this.dataset.filterfun;
+                jQuery.ajax({
+                    url: url,
+                    data: jQuery('#'+formId).serialize(),
+                    type: "POST",
+                    aSync: false,
+                    dataType: "JSON",
+                    success: function (json) {
+                        if(json.acrtionIsSuccess){
+                            Swal.fire({
+                                title:'刪除成功',
+                                icon:'success',
+                                timer: 2000
+                            }).then((result) => {
+                                jQuery('#'+json.modelId).modal('hide');
+                            });
+                            eval(filterFunction);
+                        }else if(json.dataVersionDifferent){
+                            dataVersionDifferent(json);
+                        }else{
+                            saveFalse(json);
+                        }
+                    },
+                    error:function () {
+                        Swal.fire('錯誤','請洽系統管理員','error');
+                    },
+                    beforeSend:function(){
+                        jQuery("div .message ").alert('close');
+                    },
+                    statusCode: {
+                        404: function() {
+                            Swal.fire('400','找不到頁面','warning');
+                        },
+                        500:function() {
+                            Swal.fire('500','系統發生錯誤','warning');
+                        }
+                    }
+                });
+                break;
+            case 'dofunction':
+                let onclick = this.dataset.onclick;
+                eval(onclick);
+                break;
+        }
+
+        /**
+         * ajax 回傳model內容後處理事件
+         */
+        function renderModelContent(modelId,url) {
+            let modeContent = jQuery(document.getElementById(modelId+"-model-content-self"));
+            jQuery.ajax({
+                url: url,
+                type: "POST",
+                aSync: false,
+                dataType: "html",
+                success: function (html) {
+                    modeContent.html(html);
+                    setTimeout(function(){
+                        jQuery('#'+modelId).modal('show');
+                    }, 20);
+                },
+                error:function () {
+                    Swal.fire('錯誤','請洽系統管理員','error');
+                }
+            });
+        }
+
+        /**
+         * 資料已異動事件
+         */
+        function dataVersionDifferent(json){
+            Swal.fire('資料已異動','資料有被其他人異動過，請重新查詢後再繼續動作','warning')
+                .then((result) => {
+                    var alertDiv = jQuery(document.createElement("div"));
+                    alertDiv.attr("class","alert alert-danger message");
+                    alertDiv.attr("role","alert");
+                    alertDiv.append(json.acrtionMessage);
+                    jQuery('#message').append(alertDiv);
+                });
+        }
+
+        /**
+         * 資料除存失敗事件
+         * @param json
+         */
+        function saveFalse(json) {
+            Swal.fire('失敗','儲存失敗','error')
+                .then((result) => {
+                    var alertDiv = jQuery(document.createElement("div"));
+                    alertDiv.attr("class","alert alert-danger message");
+                    alertDiv.attr("role","alert");
+                    alertDiv.append(json.acrtionMessage);
+                    jQuery('#message').append(alertDiv);
+                });
+        }
     });
 </script>
 </body>

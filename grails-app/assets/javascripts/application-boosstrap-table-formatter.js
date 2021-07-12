@@ -71,6 +71,12 @@ function editDataFormatter(value,row){
     return returnVal;
 }
 
+function editDataFormatterModel(value,row){
+    let returnVal;
+    returnVal = '<button type="button" class="btn btn-primary" onclick="editDataModel(\''+row.id+'\')">編輯</button>';
+    return returnVal;
+}
+
 /**
  * 日期顯示
  * @param value
