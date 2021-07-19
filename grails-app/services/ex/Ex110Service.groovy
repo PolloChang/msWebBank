@@ -161,7 +161,10 @@ class Ex110Service implements DataBinder {
         }
         else{
             try{
+                println 164
+                println ex110I?.properties
                 ex110I.save(flush: true)
+                println 166
                 result.acrtionIsSuccess = true
             }catch(Exception ex){
                 result.acrtionIsSuccess = false

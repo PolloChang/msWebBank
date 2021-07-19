@@ -9,7 +9,7 @@ import grails.compiler.GrailsCompileStatic
 @GrailsCompileStatic
 @EqualsAndHashCode(includes=['configAttribute', 'httpMethod', 'url'])
 @ToString(includes=['configAttribute', 'httpMethod', 'url'], cache=true, includeNames=true, includePackage=false)
-class RequestMap implements Serializable {
+class 	RequestMap implements Serializable {
 
 	private static final long serialVersionUID = 1
 	UUID 		id
@@ -55,5 +55,5 @@ class RequestMap implements Serializable {
 		url                 blank: false, unique: 'httpMethod'
 	}
 
-	def updateBindMap = ["configAttribute","httpMethod","url"]
+	def updateBindMap = ["httpMethod","url"]
 }

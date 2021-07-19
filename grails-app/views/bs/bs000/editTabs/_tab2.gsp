@@ -28,8 +28,11 @@
                         <bootstrap:button
                                 name="add"
                                 class="btn-success"
+                                data-active="buttonActive"
+                                data-action="openModel"
+                                data-modelid="edit-model"
+                                data-url="${createLink(controller: "bs",action: "addRequestMapModel",params: [url:bs000I?.controller])}"
                                 showText="${message(code: "default.button.create.label")}"
-                                onclick="addData();"
                         />
                     </div>
                 </td>
@@ -44,15 +47,10 @@
         <g:render template="/bs/bs000/editTabs/tab2ResultData" />
     </div>
 </form>
+<bootstrap:modal name="edit-model" modalTitle="請輸入資料" ></bootstrap:modal>
 <script type="text/javascript">
     tab2SearchData();
 
-    /**
-     * action: 新增資料
-     */
-    function addData() {
-        console.log('1234');
-    }
     /**
      * action: 查詢
      */

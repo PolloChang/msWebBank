@@ -1,6 +1,7 @@
 package security
 
 import grails.gorm.transactions.Transactional
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.web.databinding.DataBinder
 import grails.web.servlet.mvc.GrailsParameterMap
 import org.springframework.context.MessageSource
@@ -11,6 +12,7 @@ class RequestMapService implements DataBinder {
     
     ToolBoxService toolBoxService
     MessageSource messageSource
+    SpringSecurityService springSecurityService
 
     /**
      * 查詢
@@ -119,6 +121,7 @@ class RequestMapService implements DataBinder {
     LinkedHashMap doInsert(GrailsParameterMap params){
         return _saveInstance(new RequestMap(), params, { RequestMap requestMapI ->
             requestMapI.manCreated = '系統管理員'
+            requestMapI.dateCreated = new Date()
             requestMapI.validate()
         })
     }
@@ -145,15 +148,14 @@ class RequestMapService implements DataBinder {
         LinkedHashMap result = [:]
         result.bean = requestMapI
         closure(requestMapI)
-
         bindData(requestMapI, params["requestMap"], [include:requestMapI.updateBindMap])
+        requestMapI.configAttribute = params?.requestMap?.configAttribute?.join(',')
         int pageDataVersion = params.requestMap.version?(params.requestMap?.version as int):0
-        if(requestMapI.version != pageDataVersion && params.requestMap.id){
-
+        if(requestMapI.version?:0 != pageDataVersion && params.requestMap.id){
             result.dataVersionDifferent = true
+            result.acrtionIsSuccess = false
             requestMapI.discard()
         } else if (requestMapI.hasErrors()) { //失敗
-
             def errorColumn = []
             requestMapI.errors.allErrors.eachWithIndex  {item, index ->
                 errorColumn[index] = [item?.arguments,item?.defaultMessage]
@@ -163,7 +165,9 @@ class RequestMapService implements DataBinder {
         }
         else{
             try{
+                println requestMapI?.properties
                 requestMapI.save(flush: true)
+                springSecurityService.clearCachedRequestmaps()
                 result.acrtionIsSuccess = true
             }catch(Exception ex){
                 result.acrtionIsSuccess = false

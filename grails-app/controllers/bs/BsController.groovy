@@ -1,7 +1,8 @@
 package bs
 
-import ex.Ex100
 import grails.converters.JSON
+import grails.plugin.springsecurity.SpringSecurityService
+import security.RequestMap
 import security.RequestMapService
 
 /**
@@ -12,6 +13,7 @@ class BsController {
 
     Bs000Service bs000Service
     RequestMapService requestMapService
+    SpringSecurityService springSecurityService
 
     /**
      * page: 查詢頁面
@@ -126,6 +128,85 @@ class BsController {
             params.url = "nothing"
         }
         LinkedHashMap result = requestMapService.filter(params)
+        render result as JSON
+    }
+
+    /**
+     * page: 新增使用權限
+     */
+    def addRequestMapModel = {
+        RequestMap requestMapI = new RequestMap(url: params?.url)
+        render template: "/bs/bs000/models/requestMapModel/addModel", model: [requestMapI:requestMapI]
+    }
+
+    /**
+     * page: 修改使用權限
+     */
+    def editRequestMapModel = {
+        println params
+        render template: "/bs/bs000/models/requestMapModel/editModel", model: [requestMapI:RequestMap.get(params?.id)]
+    }
+
+    /**
+     * action: 新增 RequestMapModel
+     * @return
+     */
+    JSON insertRequestMapModel(){
+
+
+        println 155
+        HashMap result = [:]
+
+        println 157
+        if(!result.acrtionIsSuccess){
+            result.acrtionMessage = g.renderErrors( bean:result.bean,as:'list') as Object
+        }
+        else{
+            result.modelId = params?.modelId
+            result.forWardUrl = createLink(controller: 'bs',action: 'editRequestMapModel',params: [
+                    id:result.bean?.id,
+            ]) as Object
+        }
+        return result as JSON
+
+    }
+
+    /**
+     * action: 更新 RequestMapModel
+     * @return
+     */
+    JSON updateRequestMapModel(){
+
+        HashMap result = requestMapService.doUpdate(params)
+
+        if(!result.acrtionIsSuccess){
+            result.acrtionMessage = g.renderErrors( bean:result.bean,as:'list') as Object
+        }
+        else{
+            springSecurityService.clearCachedRequestmaps()
+            result.modelId = params?.modelId
+            result.forWardUrl = createLink(controller: 'bs',action: 'editRequestMapModel',params: [
+                    id:result.bean?.id,
+            ]) as Object
+        }
+
+        return result as JSON
+
+    }
+
+    /**
+     * action: 刪除 RequestMap
+     * @return
+     */
+    JSON deleteRequestMapModel(){
+        LinkedHashMap result = requestMapService.doDelete(params)
+        if(!result.acrtionIsSuccess){
+            result.acrtionMessage = g.renderErrors( bean:result.bean,as:'list') as Object
+        }
+        else{
+            springSecurityService.clearCachedRequestmaps()
+            result.modelId = params?.modelId
+        }
         render result as JSON
     }
 }

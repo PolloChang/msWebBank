@@ -3,7 +3,7 @@ package bs
 import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-class Bs000IServiceSpec extends Specification implements ServiceUnitTest<Bs000IService>{
+class Bs000IServiceSpec extends Specification implements ServiceUnitTest<Bs000>{
 
     def setup() {
     }

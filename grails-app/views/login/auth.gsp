@@ -32,7 +32,7 @@
                 <g:if test='${flash.message}'>
                     <div class="alert alert-danger" role="alert">${flash.message}</div>
                 </g:if>
-                <form class="form-signin" action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" autocomplete="off">
+                <form class="form-signin" action="${createLink(controller: 'login',action: 'authenticate')}" method="POST" id="loginForm" autocomplete="off">
                     <div class="form-group">
                         <label for="username">${message(code: "role.username.label")}</label>
                         <input type="text" class="form-control" name="${usernameParameter ?: 'username'}" id="username" autocapitalize="none"/>
